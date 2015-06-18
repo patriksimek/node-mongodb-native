@@ -34,11 +34,31 @@ var shallowClone = function(obj) {
 
 // Skipping parameters
 var startupOptions = {
+    skipStartup: true
+  , skipRestart: true
+  , skipShutdown: true
+  , skip: false
+}
+
+// Skipping parameters
+var startupOptions = {
     skipStartup: false
   , skipRestart: false
   , skipShutdown: false
   , skip: false
 }
+
+// var memwatch = require('memwatch');
+// memwatch.on('stats', function(stats) {
+//   // do something with post-gc memory usage stats
+//   console.log("====================== memwatch stats")
+//   console.log(stats)
+// });
+// memwatch.on('leak', function(info) {
+//   // do something with post-gc memory usage stats
+//   console.log("====================== memwatch leak")
+//   console.log(info)
+// })
 
 /**
  * Standalone MongoDB Configuration
@@ -235,7 +255,7 @@ var testFiles =[
   , '/test/functional/bulk_tests.js'
   , '/test/functional/operation_example_tests.js'
   , '/test/functional/crud_api_tests.js'
-  , '/test/functional/reconnect_tests.js'
+  // , '/test/functional/reconnect_tests.js'
 
 
   // Logging tests
@@ -472,6 +492,11 @@ if(argv.t == 'functional') {
 
   // Add travis filter
   runner.plugin(new TravisFilter());
+
+  // Skip startup
+  if(startupOptions.skipStartup) {
+    return runner.run(config);
+  }
 
   // Remove db directories
   try {

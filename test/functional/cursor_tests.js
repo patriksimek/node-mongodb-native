@@ -1499,11 +1499,12 @@ exports['Should correctly execute count on cursor'] = {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
     db.open(function(err, db) {
       // Create collection
-      db.createCollection('Should_correctly_execute_count_on_cursor', function(err, collection) {
+      db.createCollection('Should_correctly_execute_count_on_cursor_1', function(err, collection) {
         test.equal(null, err);
 
         // insert all docs
         collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+          console.dir(err)
           test.equal(null, err);
           var total = 0;
           // Create a cursor for the content
@@ -1648,6 +1649,7 @@ exports['immediately destroying a stream prevents the query from executing'] = {
           stream.on('data', function () {
             i++;
           })
+
           stream.on('close', done('close'));
           stream.on('error', done('error'));
 
@@ -1655,12 +1657,15 @@ exports['immediately destroying a stream prevents the query from executing'] = {
 
           function done (e) {
             return function(err) {
-              test.equal(++doneCalled, 1);
-              test.equal(undefined, err);
-              test.strictEqual(0, i);
-              test.strictEqual(true, stream.isClosed());
-              db.close();
-              test.done();
+              ++doneCalled;
+
+              if(doneCalled == 1) {
+                test.equal(undefined, err);
+                test.strictEqual(0, i);
+                test.strictEqual(true, stream.isClosed());
+                db.close();
+                test.done();
+              }
             }
           }
         });
@@ -1700,7 +1705,6 @@ exports['destroying a stream stops it'] = {
           var stream = collection.find().stream();
 
           test.strictEqual(false, stream.isClosed());
-          // test.strictEqual(true, stream.readable);
 
           stream.on('data', function (doc) {
             if(++i === 5) {
@@ -1718,8 +1722,6 @@ exports['destroying a stream stops it'] = {
               test.strictEqual(5, i);
               test.strictEqual(1, finished);
               test.strictEqual(true, stream.isClosed());
-              // test.strictEqual(false, stream.readable);
-              // test.strictEqual(true, stream._cursor.isClosed());
               db.close();
               test.done();
             }, 150)
@@ -1774,13 +1776,15 @@ exports['cursor stream errors'] = {
           function done (e) {
             return function(err) {
               ++finished;
-              setTimeout(function () {
-                test.equal(5, i);
-                test.equal(1, finished);
-                test.equal(true, stream.isClosed());
-                client.close();
-                test.done();
-              }, 150)
+
+              if(finished == 2) {
+                setTimeout(function () {
+                  test.equal(5, i);
+                  test.equal(true, stream.isClosed());
+                  client.close();
+                  test.done();
+                }, 150)
+              }
             }
           }
         });
@@ -1826,19 +1830,24 @@ exports['cursor stream errors connection force closed'] = {
             }
           });
 
-          stream.on('close', done);
+          stream.on('close', done('close'));
 
-          stream.on('error', done);
+          stream.on('error', done('error'));
 
-          function done (err) {
-            ++finished;
-            setTimeout(function () {
-              test.equal(5, i);
-              test.equal(1, finished);
-              test.equal(true, stream.isClosed());
-              client.close();
-              test.done();
-            }, 150)
+          function done (e) {
+            return function(err) {
+              ++finished;
+
+              if(finished == 2) {
+                setTimeout(function () {
+                  test.equal(5, i);
+                  test.equal(2, finished);
+                  test.equal(true, stream.isClosed());
+                  client.close();
+                  test.done();
+                }, 150)
+              }
+            }
           }
         });
       });
@@ -1937,8 +1946,7 @@ exports.shouldCloseDeadTailableCursors = {
         stream.on('data', function (doc) {});
 
         stream.on('error', function (err) {
-          // shouldn't happen
-          test.equal(null, err);
+          test.ok(err != null);
         });
 
         stream.on('close', function () {
@@ -1990,6 +1998,42 @@ exports.shouldAwaitData = {
               db.close();
               test.done();
             }
+          });
+        });
+      });
+    });
+  }
+}
+
+/**
+ * @ignore
+ */
+exports.shouldAwaitDataUsingCursorFlag = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    // http://www.mongodb.org/display/DOCS/Tailable+Cursors
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
+
+    db.open(function(err, db) {
+      var options = { capped: true, size: 8};
+      db.createCollection('should_await_data_cursor_flag', options, function(err, collection) {
+        collection.insert({a:1}, configuration.writeConcernMax(), function(err, result) {
+          var s = new Date();
+          // Create cursor with awaitdata, and timeout after the period specified
+          var cursor = collection.find({}, {numberOfRetries:1});
+          cursor.addCursorFlag('tailable', true)
+          cursor.addCursorFlag('awaitData', true)
+          cursor.each(function(err, result) {
+              if(err != null) {
+                var e = new Date();
+                test.ok((e.getTime() - s.getTime()) > 1000);
+                db.close();
+                test.done();
+              }
           });
         });
       });
@@ -2306,7 +2350,7 @@ exports.shouldFailToTailANormalCollection = {
         collection.find({}, {tailable:true}).each(function(err, doc) {
           test.ok(err instanceof Error);
           test.ok(typeof(err.code) === 'number');
-          
+
           db.close();
           test.done();
         });
@@ -2568,3 +2612,408 @@ exports['Should report database name and collection name'] = {
     });
   }
 };
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly execute count on cursor with maxTimeMS'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var docs = [];
+
+    for(var i = 0; i < 1000; i++) {
+      var d = new Date().getTime() + i*1000;
+      docs[i] = {'a':i, createdAt:new Date(d)};
+    }
+
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      // Create collection
+      db.createCollection('Should_correctly_execute_count_on_cursor_2', function(err, collection) {
+        test.equal(null, err);
+
+        // insert all docs
+        collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+          test.equal(null, err);
+          var total = 0;
+
+          // Create a cursor for the content
+          var cursor = collection.find({});
+          cursor.limit(100)
+          cursor.skip(10);
+          cursor.count(true, {maxTimeMS: 1000}, function(err, c) {
+            test.equal(null, err);
+
+            // Create a cursor for the content
+            var cursor = collection.find({});
+            cursor.limit(100)
+            cursor.skip(10);
+            cursor.maxTimeMS(100)
+            cursor.count(function(err, c) {
+              test.equal(null, err);
+
+              db.close();
+              test.done();
+            });
+          });
+        })
+      });
+    });
+  }
+}
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly execute count on cursor with maxTimeMS set using legacy method'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var docs = [];
+
+    for(var i = 0; i < 1000; i++) {
+      var d = new Date().getTime() + i*1000;
+      docs[i] = {'a':i, createdAt:new Date(d)};
+    }
+
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      // Create collection
+      db.createCollection('Should_correctly_execute_count_on_cursor_3', function(err, collection) {
+        test.equal(null, err);
+
+        // insert all docs
+        collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+          test.equal(null, err);
+          var total = 0;
+
+          // Create a cursor for the content
+          var cursor = collection.find({}, {maxTimeMS: 100});
+          cursor.toArray(function(err, docs) {
+            test.equal(null, err);
+
+            db.close();
+            test.done();
+          });
+        })
+      });
+    });
+  }
+}
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly apply map to toArray'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var docs = [];
+
+    for(var i = 0; i < 1000; i++) {
+      var d = new Date().getTime() + i*1000;
+      docs[i] = {'a':i, createdAt:new Date(d)};
+    }
+
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      test.equal(null, err);
+
+      var collection = db.collection('map_toArray');
+
+      // insert all docs
+      collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+        test.equal(null, err);
+        var total = 0;
+
+        // Create a cursor for the content
+        var cursor = collection.find({})
+          .map(function(x) { return {a:1}; })
+          .batchSize(5)
+          .limit(10);
+        cursor.toArray(function(err, docs) {
+          test.equal(null, err);
+          test.equal(10, docs.length);
+
+          // Ensure all docs where mapped
+          docs.forEach(function(x) {
+            test.equal(1, x.a);
+          })
+
+          db.close();
+          test.done();
+        });
+      })
+    });
+  }
+}
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly apply map to next'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var docs = [];
+
+    for(var i = 0; i < 1000; i++) {
+      var d = new Date().getTime() + i*1000;
+      docs[i] = {'a':i, createdAt:new Date(d)};
+    }
+
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      test.equal(null, err);
+
+      var collection = db.collection('map_next');
+
+      // insert all docs
+      collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+        test.equal(null, err);
+        var total = 0;
+
+        // Create a cursor for the content
+        var cursor = collection.find({})
+          .map(function(x) { return {a:1}; })
+          .batchSize(5)
+          .limit(10);
+        cursor.next(function(err, doc) {
+          test.equal(null, err);
+          test.equal(1, doc.a);
+
+          db.close();
+          test.done();
+        });
+      })
+    });
+  }
+}
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly apply map to nextObject'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var docs = [];
+
+    for(var i = 0; i < 1000; i++) {
+      var d = new Date().getTime() + i*1000;
+      docs[i] = {'a':i, createdAt:new Date(d)};
+    }
+
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      test.equal(null, err);
+
+      var collection = db.collection('map_nextObject');
+
+      // insert all docs
+      collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+        test.equal(null, err);
+        var total = 0;
+
+        // Create a cursor for the content
+        var cursor = collection.find({})
+          .map(function(x) { return {a:1}; })
+          .batchSize(5)
+          .limit(10);
+        cursor.nextObject(function(err, doc) {
+          test.equal(null, err);
+          test.equal(1, doc.a);
+
+          db.close();
+          test.done();
+        });
+      })
+    });
+  }
+}
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly apply map to each'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var docs = [];
+
+    for(var i = 0; i < 1000; i++) {
+      var d = new Date().getTime() + i*1000;
+      docs[i] = {'a':i, createdAt:new Date(d)};
+    }
+
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      test.equal(null, err);
+
+      var collection = db.collection('map_each');
+
+      // insert all docs
+      collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+        test.equal(null, err);
+        var total = 0;
+
+        // Create a cursor for the content
+        var cursor = collection.find({})
+          .map(function(x) { return {a:1}; })
+          .batchSize(5)
+          .limit(10);
+        cursor.each(function(err, doc) {
+          test.equal(null, err);
+
+          if(doc) {
+            test.equal(1, doc.a);
+          } else {
+            db.close();
+            test.done();
+          }
+        });
+      })
+    });
+  }
+}
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly apply map to forEach'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var docs = [];
+
+    for(var i = 0; i < 1000; i++) {
+      var d = new Date().getTime() + i*1000;
+      docs[i] = {'a':i, createdAt:new Date(d)};
+    }
+
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      test.equal(null, err);
+
+      var collection = db.collection('map_forEach');
+
+      // insert all docs
+      collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+        test.equal(null, err);
+        var total = 0;
+
+        // Create a cursor for the content
+        var cursor = collection.find({})
+          .map(function(x) { return {a:1}; })
+          .batchSize(5)
+          .limit(10);
+        cursor.forEach(function(doc) {
+          test.equal(1, doc.a);
+        }, function(err, doc) {
+          test.equal(null, err);
+          db.close();
+          test.done();
+        });
+      })
+    });
+  }
+}
+
+/**
+ * @ignore
+ * @api private
+ */
+exports['Should correctly apply skip and limit to large set of documents'] = {
+  // Add a tag that our runner can trigger on
+  // in this case we are setting that node needs to be higher than 0.10.X to run
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    // var docs = [];
+    //
+    // for(var i = 0; i < 4000) {
+    //
+    // }
+
+    // for(var i = 0; i < 1000; i++) {
+    //   var d = new Date().getTime() + i*1000;
+    //   docs[i] = {'a':i, createdAt:new Date(d)};
+    // }
+    //
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
+    db.open(function(err, db) {
+      test.equal(null, err);
+
+      var collection = db.collection('cursor_limit_skip_correctly');
+
+      // Insert x number of docs
+      var ordered = collection.initializeUnorderedBulkOp();
+
+      for(var i = 0; i < 6000; i++) {
+        ordered.insert({a:i});
+      }
+
+      ordered.execute({w:1}, function(err, r) {
+        test.equal(null, err);
+
+        // Let's attempt to skip and limit
+        collection.find({}).limit(2016).skip(2016).toArray(function(err, docs) {
+          test.equal(null, err);
+          test.equal(2016, docs.length);
+
+          db.close();
+          test.done();
+        });
+      });
+
+      // // insert all docs
+      // collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+      //   test.equal(null, err);
+      //   var total = 0;
+      //
+      //   // Create a cursor for the content
+      //   var cursor = collection.find({})
+      //     .map(function(x) { return {a:1}; })
+      //     .batchSize(5)
+      //     .limit(10);
+      //   cursor.forEach(function(doc) {
+      //     test.equal(1, doc.a);
+      //   }, function(err, doc) {
+      //     test.equal(null, err);
+      //     db.close();
+      //     test.done();
+      //   });
+      // })
+    });
+  }
+}

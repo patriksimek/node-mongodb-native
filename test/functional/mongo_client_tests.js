@@ -1,5 +1,7 @@
 "use strict";
 
+var f = require('util').format;
+
 exports['Should Correctly Do MongoClient with bufferMaxEntries:0'] = {
   metadata: {
     requires: {
@@ -208,5 +210,100 @@ exports['Should correctly pass through extra sharded options'] = {
       db.close();
       test.done();
     });
+  }
+}
+
+exports['Should correctly set MaxPoolSize on single server'] = {
+  metadata: {
+    requires: {
+      node: ">0.8.0",
+      topology: ['single']
+    }
+  },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var MongoClient = configuration.require.MongoClient;
+    var url = configuration.url();
+    url = url.indexOf('?') != -1 
+      ? f('%s&%s', url, 'maxPoolSize=100')
+      : f('%s?%s', url, 'maxPoolSize=100');
+
+    MongoClient.connect(url, function(err, db) {
+      test.equal(100, db.serverConfig.connections().length);
+
+      db.close();
+      test.done();
+    });
+  }
+}
+
+exports['Should correctly set MaxPoolSize on replicaset server'] = {
+  metadata: {
+    requires: {
+      node: ">0.8.0",
+      topology: ['replicaset']
+    }
+  },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var MongoClient = configuration.require.MongoClient;
+    var url = configuration.url();
+    url = url.indexOf('?') != -1 
+      ? f('%s&%s', url, 'maxPoolSize=100')
+      : f('%s?%s', url, 'maxPoolSize=100');
+
+    MongoClient.connect(url, function(err, db) {
+      test.ok(db.serverConfig.connections().length >= 100);
+
+      db.close();
+      test.done();
+    });
+  }
+}
+
+exports['Should correctly set MaxPoolSize on sharded server'] = {
+  metadata: {
+    requires: {
+      node: ">0.8.0",
+      topology: ['sharded']
+    }
+  },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var MongoClient = configuration.require.MongoClient;
+    var url = configuration.url();
+    url = url.indexOf('?') != -1 
+      ? f('%s&%s', url, 'maxPoolSize=100')
+      : f('%s?%s', url, 'maxPoolSize=100');
+
+    MongoClient.connect(url, function(err, db) {
+      test.ok(db.serverConfig.connections().length >= 100);
+
+      db.close();
+      test.done();
+    });
+  }
+}
+
+/**
+ * @ignore
+ */
+exports['Should fail due to wrong uri user:password@localhost'] = {
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var MongoClient = configuration.require.MongoClient;
+
+    try {
+      MongoClient.connect('user:password@localhost:27017/test', function(err, db) {
+        db.close();
+      });      
+    } catch(err) {
+      test.done();
+    }
   }
 }

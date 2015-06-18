@@ -18,8 +18,8 @@ var f = require('util').format;
 exports.aggregationExample1 = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
-  
+  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -42,7 +42,7 @@ exports.aggregationExample1 = {
       // Create a collection
       var collection = db.collection('aggregationExample1');
       // Insert the docs
-      collection.insert(docs, {w: 1}, function(err, result) {
+      collection.insertMany(docs, {w: 1}, function(err, result) {
 
         // Execute aggregate, notice the pipeline is expressed as an Array
         collection.aggregate([
@@ -81,8 +81,8 @@ exports.aggregationExample1 = {
 exports.aggregationExample2 = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
-  
+  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -105,7 +105,7 @@ exports.aggregationExample2 = {
       // Create a collection
       var collection = db.collection('aggregationExample2');
       // Insert the docs
-      collection.insert(docs, {w: 1}, function(err, result) {
+      collection.insertMany(docs, {w: 1}, function(err, result) {
 
         // Execute aggregate, notice the pipeline is expressed as an Array
         var cursor = collection.aggregate([
@@ -143,8 +143,8 @@ exports.aggregationExample2 = {
 exports['Aggregation Cursor toArray Test'] = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
-  
+  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -167,7 +167,7 @@ exports['Aggregation Cursor toArray Test'] = {
       // Create a collection
       var collection = db.collection('aggregation_toArray_example');
       // Insert the docs
-      collection.insert(docs, {w: 1}, function(err, result) {
+      collection.insertMany(docs, {w: 1}, function(err, result) {
 
         // Execute aggregate, notice the pipeline is expressed as an Array
         var cursor = collection.aggregate([
@@ -205,8 +205,8 @@ exports['Aggregation Cursor toArray Test'] = {
 exports['Aggregation Cursor toArray Test'] = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
-  
+  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -229,7 +229,7 @@ exports['Aggregation Cursor toArray Test'] = {
       // Create a collection
       var collection = db.collection('aggregation_next_example');
       // Insert the docs
-      collection.insert(docs, {w: 1}, function(err, result) {
+      collection.insertMany(docs, {w: 1}, function(err, result) {
 
         // Execute aggregate, notice the pipeline is expressed as an Array
         var cursor = collection.aggregate([
@@ -266,8 +266,8 @@ exports['Aggregation Cursor toArray Test'] = {
 exports['Aggregation Cursor each Test'] = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
-  
+  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -290,7 +290,7 @@ exports['Aggregation Cursor each Test'] = {
       // Create a collection
       var collection = db.collection('aggregation_each_example');
       // Insert the docs
-      collection.insert(docs, {w: 1}, function(err, result) {
+      collection.insertMany(docs, {w: 1}, function(err, result) {
 
         // Execute aggregate, notice the pipeline is expressed as an Array
         var cursor = collection.aggregate([
@@ -306,7 +306,7 @@ exports['Aggregation Cursor each Test'] = {
           ], { cursor: { batchSize: 1 } });
 
         // Get all the aggregation results
-        cursor.each(function(err, docs) {          
+        cursor.each(function(err, docs) {
           test.equal(null, err);
 
           if(docs == null) {
@@ -330,8 +330,8 @@ exports['Aggregation Cursor each Test'] = {
 exports['Aggregation Cursor forEach Test'] = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
-  
+  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -354,7 +354,7 @@ exports['Aggregation Cursor forEach Test'] = {
       // Create a collection
       var collection = db.collection('aggregation_forEach_example');
       // Insert the docs
-      collection.insert(docs, {w: 1}, function(err, result) {
+      collection.insertMany(docs, {w: 1}, function(err, result) {
 
         // Execute aggregate, notice the pipeline is expressed as an Array
         var cursor = collection.aggregate([
@@ -397,8 +397,8 @@ exports['Aggregation Cursor forEach Test'] = {
 exports.aggregationExample3 = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
-  
+  metadata: { requires: { mongodb:">2.1.0", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -421,7 +421,7 @@ exports.aggregationExample3 = {
       // Create a collection
       var collection = db.collection('aggregationExample3');
       // Insert the docs
-      collection.insert(docs, {w: 1}, function(err, result) {
+      collection.insertMany(docs, {w: 1}, function(err, result) {
 
         // Execute aggregate, notice the pipeline is expressed as an Array
         var cursor = collection.aggregate([
@@ -462,7 +462,7 @@ exports.aggregationExample3 = {
  */
 exports.shouldCorrectlyDoSimpleCountExamples = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -477,7 +477,7 @@ exports.shouldCorrectlyDoSimpleCountExamples = {
       // Crete the collection for the distinct example
       var collection = db.collection('countExample1');
       // Insert documents to perform distinct against
-      collection.insert([{a:1}, {a:2}
+      collection.insertMany([{a:1}, {a:2}
         , {a:3}, {a:4, b:1}], {w: 1}, function(err, ids) {
 
         // Perform a total count command
@@ -509,7 +509,7 @@ exports.shouldCorrectlyDoSimpleCountExamples = {
  */
 exports.shouldCreateComplexIndexOnTwoFields = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -524,7 +524,7 @@ exports.shouldCreateComplexIndexOnTwoFields = {
       // Create a collection we want to drop later
       var collection = db.collection('createIndexExample1');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
@@ -545,7 +545,7 @@ exports.shouldCreateComplexIndexOnTwoFields = {
               db.close();
               test.done();
             });
-          })              
+          })
         });
       });
     });
@@ -562,7 +562,7 @@ exports.shouldCreateComplexIndexOnTwoFields = {
  */
 exports.shouldCreateASimpleIndexOnASingleField = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1, auto_reconnect:true});
@@ -578,7 +578,7 @@ exports.shouldCreateASimpleIndexOnASingleField = {
       // Create a collection we want to drop later
       var collection = db.collection('createIndexExample2');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1}, {a:2}, {a:3}, {a:4}], {w:1}, function(err, result) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}, {a:4}], {w:1}, function(err, result) {
         test.equal(null, err);
 
         // Create an index on the a field
@@ -609,7 +609,7 @@ exports.shouldCreateASimpleIndexOnASingleField = {
  */
 exports.createIndexExample3 = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1, auto_reconnect:true});
@@ -625,7 +625,7 @@ exports.createIndexExample3 = {
       // Create a collection we want to drop later
       var collection = db.collection('createIndexExample3');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], {w:1}, function(err, result) {
         test.equal(null, err);
 
@@ -665,7 +665,7 @@ exports.createIndexExample3 = {
  */
 exports.shouldCorrectlyHandleDistinctIndexesWithSubQueryFilter = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -681,7 +681,7 @@ exports.shouldCorrectlyHandleDistinctIndexesWithSubQueryFilter = {
       var collection = db.collection('distinctExample1');
 
       // Insert documents to perform distinct against
-      collection.insert([{a:0, b:{c:'a'}}, {a:1, b:{c:'b'}}, {a:1, b:{c:'c'}},
+      collection.insertMany([{a:0, b:{c:'a'}}, {a:1, b:{c:'b'}}, {a:1, b:{c:'c'}},
         {a:2, b:{c:'a'}}, {a:3}, {a:3}], configuration.writeConcernMax(), function(err, ids) {
 
         // Peform a distinct query against the a field
@@ -711,7 +711,7 @@ exports.shouldCorrectlyHandleDistinctIndexesWithSubQueryFilter = {
  */
 exports.shouldCorrectlyHandleDistinctIndexes = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -728,7 +728,7 @@ exports.shouldCorrectlyHandleDistinctIndexes = {
       var collection = db.collection('distinctExample2');
 
       // Insert documents to perform distinct against
-      collection.insert([{a:0, b:{c:'a'}}, {a:1, b:{c:'b'}}, {a:1, b:{c:'c'}},
+      collection.insertMany([{a:0, b:{c:'a'}}, {a:1, b:{c:'b'}}, {a:1, b:{c:'c'}},
         {a:2, b:{c:'a'}}, {a:3}, {a:3}, {a:5, c:1}], configuration.writeConcernMax(), function(err, ids) {
 
         // Peform a distinct query with a filter against the documents
@@ -753,7 +753,7 @@ exports.shouldCorrectlyHandleDistinctIndexes = {
  */
 exports.shouldCorrectlyDropCollectionWithDropFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -808,7 +808,7 @@ exports.shouldCorrectlyDropCollectionWithDropFunction = {
  */
 exports.dropAllIndexesExample1 = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -846,7 +846,7 @@ exports.dropAllIndexesExample1 = {
  */
 exports.shouldCorrectlyCreateAndDropIndex = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1, auto_reconnect:true});
@@ -860,7 +860,7 @@ exports.shouldCorrectlyCreateAndDropIndex = {
     // BEGIN
       var collection = db.collection('dropIndexExample1');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], {w:1}, function(err, result) {
         test.equal(null, err);
 
@@ -897,7 +897,7 @@ exports.shouldCorrectlyCreateAndDropIndex = {
  */
 exports.shouldCreateComplexEnsureIndex = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -911,7 +911,7 @@ exports.shouldCreateComplexEnsureIndex = {
     // BEGIN
       var collection = db.collection('ensureIndexExample1');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
@@ -949,7 +949,7 @@ exports.shouldCreateComplexEnsureIndex = {
  */
 exports.ensureIndexExampleWithCompountIndex = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1, auto_reconnect:true});
@@ -963,7 +963,7 @@ exports.ensureIndexExampleWithCompountIndex = {
     // BEGIN
       var collection = db.collection('ensureIndexExample2');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], {w:1}, function(err, result) {
         test.equal(null, err);
 
@@ -1002,7 +1002,7 @@ exports.ensureIndexExampleWithCompountIndex = {
  */
 exports.shouldPeformASimpleQuery = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -1019,7 +1019,7 @@ exports.shouldPeformASimpleQuery = {
       var collection = db.collection('simple_query');
 
       // Insert a bunch of documents for the testing
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Peform a simple find and return all the documents
@@ -1045,7 +1045,7 @@ exports.shouldPeformASimpleQuery = {
  */
 exports.shouldPeformASimpleExplainQuery = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -1061,7 +1061,7 @@ exports.shouldPeformASimpleExplainQuery = {
       // Create a collection we want to drop later
       var collection = db.collection('simple_explain_query');
       // Insert a bunch of documents for the testing
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Peform a simple find and return all the documents
@@ -1087,7 +1087,7 @@ exports.shouldPeformASimpleExplainQuery = {
  */
 exports.shouldPeformASimpleLimitSkipQuery = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -1103,7 +1103,7 @@ exports.shouldPeformASimpleLimitSkipQuery = {
       // Create a collection we want to drop later
       var collection = db.collection('simple_limit_skip_query');
       // Insert a bunch of documents for the testing
-      collection.insert([{a:1, b:1}, {a:2, b:2}, {a:3, b:3}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1, b:1}, {a:2, b:2}, {a:3, b:3}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Peform a simple find and return all the documents
@@ -1128,14 +1128,14 @@ exports.shouldPeformASimpleLimitSkipQuery = {
  * The first findAndModify command modifies a document and returns the modified document back.
  * The second findAndModify command removes the document.
  * The second findAndModify command upserts a document and returns the new document.
- * 
+ *
  * @example-class Collection
  * @example-method findAndModify
  * @ignore
  */
 exports.shouldPerformSimpleFindAndModifyOperations = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -1151,7 +1151,7 @@ exports.shouldPerformSimpleFindAndModifyOperations = {
       var collection = db.collection('simple_find_and_modify_operations_');
 
       // Insert some test documentations
-      collection.insert([{a:1}, {b:1}, {c:1}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1}, {b:1}, {c:1}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Simple findAndModify command returning the new document
@@ -1199,7 +1199,7 @@ exports.shouldPerformSimpleFindAndModifyOperations = {
  */
 exports.shouldPerformSimpleFindAndRemove = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -1215,7 +1215,7 @@ exports.shouldPerformSimpleFindAndRemove = {
       // Create a collection we want to drop later
       var collection = db.collection('simple_find_and_modify_operations_2');
       // Insert some test documentations
-      collection.insert([{a:1}, {b:1, d:1}, {c:1}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1}, {b:1, d:1}, {c:1}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Simple findAndModify command returning the old document and
@@ -1249,7 +1249,7 @@ exports.shouldPerformSimpleFindAndRemove = {
  */
 exports.shouldPeformASimpleLimitSkipFindOneQuery = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -1265,7 +1265,7 @@ exports.shouldPeformASimpleLimitSkipFindOneQuery = {
       // Create a collection we want to drop later
       var collection = db.collection('simple_limit_skip_find_one_query');
       // Insert a bunch of documents for the testing
-      collection.insert([{a:1, b:1}, {a:2, b:2}, {a:3, b:3}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1, b:1}, {a:2, b:2}, {a:3, b:3}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Peform a simple find and return all the documents
@@ -1292,7 +1292,7 @@ exports.shouldPeformASimpleLimitSkipFindOneQuery = {
  */
 exports.shouldCorrectlyPerformSimpleGeoNearCommand = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -1304,25 +1304,25 @@ exports.shouldCorrectlyPerformSimpleGeoNearCommand = {
     // REPLACE configuration.writeConcernMax() WITH {w:1}
     // REMOVE-LINE test.done();
     // BEGIN
-      
+
       // Fetch the collection
       var collection = db.collection("simple_geo_near_command");
-        
+
       // Add a location based index
       collection.ensureIndex({loc:"2d"}, function(err, result) {
 
         // Save a new location tagged document
-        collection.insert([{a:1, loc:[50, 30]}, {a:1, loc:[30, 50]}], configuration.writeConcernMax(), function(err, result) {
-         
+        collection.insertMany([{a:1, loc:[50, 30]}, {a:1, loc:[30, 50]}], configuration.writeConcernMax(), function(err, result) {
+
           // Use geoNear command to find document
           collection.geoNear(50, 50, {query:{a:1}, num:1}, function(err, docs) {
             test.equal(1, docs.results.length);
-            
+
             db.close();
             test.done();
-          });          
+          });
         });
-      });      
+      });
     });
     // END
   }
@@ -1337,7 +1337,7 @@ exports.shouldCorrectlyPerformSimpleGeoNearCommand = {
  */
 exports.shouldCorrectlyPerformSimpleGeoHaystackSearchCommand = {
   metadata: { requires: { topology: ["single", "replicaset"] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -1349,24 +1349,24 @@ exports.shouldCorrectlyPerformSimpleGeoHaystackSearchCommand = {
     // REPLACE configuration.writeConcernMax() WITH {w:1}
     // REMOVE-LINE test.done();
     // BEGIN
-      
+
       // Fetch the collection
       var collection = db.collection("simple_geo_haystack_command");
-        
+
       // Add a location based index
       collection.ensureIndex({loc: "geoHaystack", type: 1}, {bucketSize: 1}, function(err, result) {
 
         // Save a new location tagged document
-        collection.insert([{a:1, loc:[50, 30]}, {a:1, loc:[30, 50]}], configuration.writeConcernMax(), function(err, result) {
-         
+        collection.insertMany([{a:1, loc:[50, 30]}, {a:1, loc:[30, 50]}], configuration.writeConcernMax(), function(err, result) {
+
           // Use geoNear command to find document
           collection.geoHaystackSearch(50, 50, {search:{a:1}, limit:1, maxDistance:100}, function(err, docs) {
             test.equal(1, docs.results.length);
             db.close();
             test.done();
-          });          
+          });
         });
-      });      
+      });
     });
     // END
   }
@@ -1381,7 +1381,7 @@ exports.shouldCorrectlyPerformSimpleGeoHaystackSearchCommand = {
  */
 exports.shouldCorrectlyExecuteGroupFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var Code = configuration.require.Code;
@@ -1404,7 +1404,7 @@ exports.shouldCorrectlyExecuteGroupFunction = {
         test.deepEqual([], results);
 
         // Trigger some inserts on the collection
-        collection.insert([{'a':2}, {'b':5}, {'a':1}], {w:1}, function(err, ids) {
+        collection.insertMany([{'a':2}, {'b':5}, {'a':1}], {w:1}, function(err, ids) {
 
           // Perform a group count
           collection.group([], {}, {"count":0}, "function (obj, prev) { prev.count++; }", function(err, results) {
@@ -1425,7 +1425,7 @@ exports.shouldCorrectlyExecuteGroupFunction = {
                   test.equal(1, results[0].count);
 
                   // Insert some more test data
-                  collection.insert([{'a':2}, {'b':3}], {w:1}, function(err, ids) {
+                  collection.insertMany([{'a':2}, {'b':3}], {w:1}, function(err, ids) {
 
                     // Do a Group by field a
                     collection.group(['a'], {}, {"count":0}, "function (obj, prev) { prev.count++; }", function(err, results) {
@@ -1508,7 +1508,7 @@ exports.shouldCorrectlyExecuteGroupFunction = {
  */
 exports.shouldPerformSimpleMapReduceFunctions = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -1525,7 +1525,7 @@ exports.shouldPerformSimpleMapReduceFunctions = {
       var collection = db.collection('test_map_reduce_functions');
 
       // Insert some documents to perform map reduce over
-      collection.insert([{'user_id':1}, {'user_id':2}], {w:1}, function(err, r) {
+      collection.insertMany([{'user_id':1}, {'user_id':2}], {w:1}, function(err, r) {
 
         // Map function
         var map = function() { emit(this.user_id, 1); };
@@ -1565,7 +1565,7 @@ exports.shouldPerformMapReduceFunctionInline = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { mongodb: '>1.7.6', topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -1582,7 +1582,7 @@ exports.shouldPerformMapReduceFunctionInline = {
       var collection = db.collection('test_map_reduce_functions_inline');
 
       // Insert some test documents
-      collection.insert([{'user_id':1}, {'user_id':2}], {w:1}, function(err, r) {
+      collection.insertMany([{'user_id':1}, {'user_id':2}], {w:1}, function(err, r) {
 
         // Map function
         var map = function() { emit(this.user_id, 1); };
@@ -1615,7 +1615,7 @@ exports.shouldPerformMapReduceFunctionInline = {
  */
 exports.shouldPerformMapReduceWithContext = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var Code = configuration.require.Code;
@@ -1634,7 +1634,7 @@ exports.shouldPerformMapReduceWithContext = {
       var collection = db.collection('test_map_reduce_functions_scope');
 
       // Insert some test documents
-      collection.insert([{'user_id':1, 'timestamp':new Date()}
+      collection.insertMany([{'user_id':1, 'timestamp':new Date()}
         , {'user_id':2, 'timestamp':new Date()}], {w:1}, function(err, r) {
 
         // Map function
@@ -1700,7 +1700,7 @@ exports.shouldPerformMapReduceWithContext = {
  */
 exports.shouldPerformMapReduceInContextObjects = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var Code = configuration.require.Code;
@@ -1719,7 +1719,7 @@ exports.shouldPerformMapReduceInContextObjects = {
       var collection = db.collection('test_map_reduce_functions_scope_objects');
 
       // Insert some test documents
-      collection.insert([{'user_id':1, 'timestamp':new Date()}
+      collection.insertMany([{'user_id':1, 'timestamp':new Date()}
         , {'user_id':2, 'timestamp':new Date()}], {w:1}, function(err, r) {
 
         // Map function
@@ -1784,7 +1784,7 @@ exports.shouldPerformMapReduceInContextObjects = {
  */
 exports.shouldCorrectlyRetriveACollectionsIndexes = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -1813,7 +1813,7 @@ exports.shouldCorrectlyRetriveACollectionsIndexes = {
 
               db.close();
               test.done();
-            });              
+            });
           }, 1000);
         });
       });
@@ -1831,7 +1831,7 @@ exports.shouldCorrectlyRetriveACollectionsIndexes = {
  */
 exports.shouldCorrectlyExecuteIndexExists = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -1882,7 +1882,7 @@ exports.shouldCorrectlyShowTheResultsFromIndexInformation = {
   metadata: {
     requires: { topology: ["single", "replicaset"] }
   },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0, native_parser:false}, {poolSize:1, auto_reconnect:false});
@@ -1898,7 +1898,7 @@ exports.shouldCorrectlyShowTheResultsFromIndexInformation = {
       // Create a collection we want to drop later
       var collection = db.collection('more_index_information_test_2');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
@@ -1936,7 +1936,7 @@ exports.shouldCorrectlyShowTheResultsFromIndexInformation = {
  */
 exports.shouldCorrectlyShowAllTheResultsFromIndexInformation = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1, auto_reconnect:true});
@@ -1952,7 +1952,7 @@ exports.shouldCorrectlyShowAllTheResultsFromIndexInformation = {
       // Create a collection we want to drop later
       var collection = db.collection('more_index_information_test_3');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], {w:1}, function(err, result) {
         test.equal(null, err);
 
@@ -1992,7 +1992,7 @@ exports.shouldCorrectlyShowAllTheResultsFromIndexInformation = {
 exports.shouldCorrectlyPerformASimpleSingleDocumentInsertNoCallbackNoSafe = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
-  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },  
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2005,7 +2005,7 @@ exports.shouldCorrectlyPerformASimpleSingleDocumentInsertNoCallbackNoSafe = {
     // BEGIN
       var collection = db.collection("simple_document_insert_collection_no_safe");
       // Insert a single document
-      collection.insert({hello:'world_no_safe'});
+      collection.insertOne({hello:'world_no_safe'});
 
       // Wait for a second before finishing up, to ensure we have written the item to disk
       setTimeout(function() {
@@ -2034,7 +2034,7 @@ exports.shouldCorrectlyPerformABatchDocumentInsertSafe = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2048,7 +2048,7 @@ exports.shouldCorrectlyPerformABatchDocumentInsertSafe = {
       // Fetch a collection to insert document into
       var collection = db.collection("batch_document_insert_collection_safe");
       // Insert a single document
-      collection.insert([{hello:'world_safe1'}
+      collection.insertMany([{hello:'world_safe1'}
         , {hello:'world_safe2'}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
@@ -2076,7 +2076,7 @@ exports.shouldCorrectlyPerformASimpleDocumentInsertWithFunctionSafe = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2093,7 +2093,7 @@ exports.shouldCorrectlyPerformASimpleDocumentInsertWithFunctionSafe = {
       var o = configuration.writeConcernMax();
       o.serializeFunctions = true;
       // Insert a single document
-      collection.insert({hello:'world'
+      collection.insertOne({hello:'world'
         , func:function() {}}, o, function(err, result) {
         test.equal(null, err);
 
@@ -2121,7 +2121,7 @@ exports["Should correctly execute insert with keepGoing option on mongod >= 1.9.
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { mongodb:">1.9.1", topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2141,11 +2141,11 @@ exports["Should correctly execute insert with keepGoing option on mongod >= 1.9.
       collection.ensureIndex({title:1}, {unique:true}, function(err, indexName) {
 
         // Insert some intial data into the collection
-        collection.insert([{name:"Jim"}
+        collection.insertMany([{name:"Jim"}
           , {name:"Sarah", title:"Princess"}], configuration.writeConcernMax(), function(err, result) {
 
           // Force keep going flag, ignoring unique index issue
-          collection.insert([{name:"Jim"}
+          collection.insertMany([{name:"Jim"}
             , {name:"Sarah", title:"Princess"}
             , {name:'Gump', title:"Gump"}], {w:1, keepGoing:true}, function(err, result) {
 
@@ -2171,7 +2171,7 @@ exports["Should correctly execute insert with keepGoing option on mongod >= 1.9.
  */
 exports.shouldCorrectlyExecuteIsCapped = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2210,7 +2210,7 @@ exports.shouldCorrectlyExecuteIsCapped = {
  */
 exports.shouldCorrectlyRetriveCollectionOptions = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var Collection = configuration.require.Collection;
@@ -2253,7 +2253,7 @@ exports['Should correctly execute parallelCollectionScan with multiple cursors']
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { mongodb: ">2.5.5", topology: ["single", "replicaset"] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -2275,7 +2275,7 @@ exports['Should correctly execute parallelCollectionScan with multiple cursors']
       // Get the collection
       var collection = db.collection('parallelCollectionScan');
       // Insert 1000 documents in a batch
-      collection.insert(docs, function(err, result) {
+      collection.insertMany(docs, function(err, result) {
         var results = [];
         var numCursors = 3;
 
@@ -2318,7 +2318,7 @@ exports['Should correctly execute parallelCollectionScan with multiple cursors']
  */
 exports.shouldCorrectlyIndexAndForceReindexOnCollection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1, auto_reconnect:true});
@@ -2334,7 +2334,7 @@ exports.shouldCorrectlyIndexAndForceReindexOnCollection = {
       // Create a collection we want to drop later
       var collection = db.collection('shouldCorrectlyForceReindexOnCollection');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4, c:4}], {w:1}, function(err, result) {
         test.equal(null, err);
 
@@ -2372,7 +2372,7 @@ exports.shouldCorrectlyIndexAndForceReindexOnCollection = {
  */
 exports.shouldRemoveAllDocumentsNoSafe = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -2384,16 +2384,16 @@ exports.shouldRemoveAllDocumentsNoSafe = {
     // REPLACE configuration.writeConcernMax() WITH {w:1}
     // REMOVE-LINE test.done();
     // BEGIN
-      
+
       // Fetch a collection to insert document into
-      var collection = db.collection("remove_all_documents_no_safe");        
+      var collection = db.collection("remove_all_documents_no_safe");
       // Insert a bunch of documents
-      collection.insert([{a:1}, {b:2}], {w:1}, function(err, result) {
+      collection.insertMany([{a:1}, {b:2}], {w:1}, function(err, result) {
         test.equal(null, err);
-        
+
         // Remove all the document
-        collection.remove();
-        
+        collection.removeMany();
+
         // Fetch all results
         collection.find().toArray(function(err, items) {
           test.equal(null, err);
@@ -2402,7 +2402,7 @@ exports.shouldRemoveAllDocumentsNoSafe = {
           test.done();
         });
       })
-    });  
+    });
     // END
   }
 }
@@ -2416,7 +2416,7 @@ exports.shouldRemoveAllDocumentsNoSafe = {
  */
 exports.shouldRemoveSubsetOfDocumentsSafeMode = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -2429,22 +2429,22 @@ exports.shouldRemoveSubsetOfDocumentsSafeMode = {
     // REMOVE-LINE test.done();
     // BEGIN
       test.equal(null, err);
-      
+
       // Fetch a collection to insert document into
       var collection = db.collection("remove_subset_of_documents_safe");
       // Insert a bunch of documents
-      collection.insert([{a:1}, {b:2}], {w:1}, function(err, result) {
+      collection.insertMany([{a:1}, {b:2}], {w:1}, function(err, result) {
         test.equal(null, err);
-        
+
         // Remove all the document
-        collection.remove({a:1}, {w:1}, function(err, r) {
+        collection.removeOne({a:1}, {w:1}, function(err, r) {
           test.equal(null, err);
           test.equal(1, r.result.n);
           db.close();
           test.done();
-        });        
+        });
       });
-    });  
+    });
     // END
   }
 }
@@ -2458,7 +2458,7 @@ exports.shouldRemoveSubsetOfDocumentsSafeMode = {
  */
 exports.shouldCorrectlyRenameCollection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -2521,7 +2521,7 @@ exports.shouldCorrectlyRenameCollection = {
           }
 
           // Insert a couple of documents
-          collection1.insert([{'x':1}, {'x':2}], configuration.writeConcernMax(), function(err, docs) {
+          collection1.insertMany([{'x':1}, {'x':2}], configuration.writeConcernMax(), function(err, docs) {
 
             // Attemp to rename the first collection to the second one, this will fail
             collection1.rename('test_rename_collection2', function(err, collection) {
@@ -2559,7 +2559,7 @@ exports.shouldCorrectlyRenameCollection = {
  */
 exports.shouldCorrectlySaveASimpleDocument = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -2602,7 +2602,7 @@ exports.shouldCorrectlySaveASimpleDocument = {
  */
 exports.shouldCorrectlySaveASimpleDocumentModifyItAndResaveIt = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2653,12 +2653,12 @@ exports.shouldCorrectlySaveASimpleDocumentModifyItAndResaveIt = {
  * Example of a simple document update with safe set to false on an existing document
  *
  * @example-class Collection
- * @example-method update
+ * @example-method updateOne
  * @ignore
  */
 exports.shouldCorrectlyUpdateASimpleDocument = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -2675,10 +2675,10 @@ exports.shouldCorrectlyUpdateASimpleDocument = {
       var collection = db.collection('update_a_simple_document');
 
       // Insert a document, then update it
-      collection.insert({a:1}, configuration.writeConcernMax(), function(err, doc) {
+      collection.insertOne({a:1}, configuration.writeConcernMax(), function(err, doc) {
 
         // Update the document with an atomic operator
-        collection.update({a:1}, {$set:{b:2}});
+        collection.updateOne({a:1}, {$set:{b:2}});
 
         // Wait for a second then fetch the document
         setTimeout(function() {
@@ -2702,12 +2702,12 @@ exports.shouldCorrectlyUpdateASimpleDocument = {
  * Example of a simple document update using upsert (the document will be inserted if it does not exist)
  *
  * @example-class Collection
- * @example-method update
+ * @example-method updateOne
  * @ignore
  */
 exports.shouldCorrectlyUpsertASimpleDocument = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2723,7 +2723,7 @@ exports.shouldCorrectlyUpsertASimpleDocument = {
       // Get a collection
       var collection = db.collection('update_a_simple_document_upsert');
       // Update the document using an upsert operation, ensuring creation if it does not exist
-      collection.update({a:1}, {b:2, a:1}, {upsert:true, w: 1}, function(err, result) {
+      collection.updateOne({a:1}, {b:2, a:1}, {upsert:true, w: 1}, function(err, result) {
         test.equal(null, err);
         test.equal(1, result.result.n);
 
@@ -2745,12 +2745,12 @@ exports.shouldCorrectlyUpsertASimpleDocument = {
  * Example of an update across multiple documents using the multi option.
  *
  * @example-class Collection
- * @example-method update
+ * @example-method updateMany
  * @ignore
  */
 exports.shouldCorrectlyUpdateMultipleDocuments = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2767,12 +2767,12 @@ exports.shouldCorrectlyUpdateMultipleDocuments = {
       var collection = db.collection('update_a_simple_document_multi');
 
       // Insert a couple of documentations
-      collection.insert([{a:1, b:1}, {a:1, b:2}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1, b:1}, {a:1, b:2}], configuration.writeConcernMax(), function(err, result) {
 
         var o = configuration.writeConcernMax();
         o.multi = true
         // Update multiple documents using the multi option
-        collection.update({a:1}, {$set:{b:0}}, o, function(err, r) {
+        collection.updateMany({a:1}, {$set:{b:0}}, o, function(err, r) {
           test.equal(null, err);
           test.equal(2, r.result.n);
 
@@ -2803,7 +2803,7 @@ exports.shouldCorrectlyUpdateMultipleDocuments = {
  */
 exports.shouldCorrectlyReturnACollectionsStats = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -2820,7 +2820,7 @@ exports.shouldCorrectlyReturnACollectionsStats = {
       var collection = db.collection('collection_stats_test');
 
       // Insert some documents
-      collection.insert([{a:1}, {hello:'world'}], configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany([{a:1}, {hello:'world'}], configuration.writeConcernMax(), function(err, result) {
 
         // Retrieve the statistics for the collection
         collection.stats(function(err, stats) {
@@ -2844,7 +2844,7 @@ exports.shouldCorrectlyReturnACollectionsStats = {
  */
 exports.shouldCorrectlyCreateAndDropAllIndex = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1, auto_reconnect:true});
@@ -2860,7 +2860,7 @@ exports.shouldCorrectlyCreateAndDropAllIndex = {
       // Create a collection we want to drop later
       var collection = db.collection('shouldCorrectlyCreateAndDropAllIndex');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4, c:4}], {w:1}, function(err, result) {
         test.equal(null, err);
 
@@ -2909,7 +2909,7 @@ exports.shouldCorrectlyCreateAndDropAllIndex = {
  */
 exports.accessAdminLevelOperations = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -2924,7 +2924,7 @@ exports.accessAdminLevelOperations = {
       // Use the admin database for the operation
       var adminDb = db.admin()
       test.ok(adminDb != null);
-      
+
       db.close();
       test.done();
     });
@@ -2941,7 +2941,7 @@ exports.accessAdminLevelOperations = {
  */
 exports.shouldCorrectlyFailOnRetryDueToAppCloseOfDb = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -2958,14 +2958,15 @@ exports.shouldCorrectlyFailOnRetryDueToAppCloseOfDb = {
       var collection = db.collection('shouldCorrectlyFailOnRetryDueToAppCloseOfDb');
 
       // Insert a document
-      collection.insert({a:1}, configuration.writeConcernMax(), function(err, result) {
+      collection.insertOne({a:1}, configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Force close the connection
         db.close(true, function(err, result) {
           // Attemp to insert should fail now with correct message 'db closed by application'
-          collection.insert({a:2}, configuration.writeConcernMax(), function(err, result) {
-            test.equal('db closed by application', err.message);
+          collection.insertOne({a:2}, configuration.writeConcernMax(), function(err, result) {
+            test.ok(err != null);
+
             db.close();
             test.done();
           });
@@ -2985,7 +2986,7 @@ exports.shouldCorrectlyFailOnRetryDueToAppCloseOfDb = {
  */
 exports.shouldCorrectlyExecuteEvalFunctions = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var Code = configuration.require.Code
@@ -3086,7 +3087,7 @@ exports.shouldCorrectlyExecuteEvalFunctions = {
  */
 exports.shouldCorrectlyDefineSystemLevelFunctionAndExecuteFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var Code = configuration.require.Code;
@@ -3101,13 +3102,13 @@ exports.shouldCorrectlyDefineSystemLevelFunctionAndExecuteFunction = {
     // BEGIN
 
       // Clean out the collection
-      db.collection("system.js").remove({}, configuration.writeConcernMax(), function(err, result) {
+      db.collection("system.js").deleteMany({}, configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Define a system level function
-        db.collection("system.js").insert({_id: "echo", value: new Code("function(x) { return x; }")}, configuration.writeConcernMax(), function(err, result) {
+        db.collection("system.js").insertOne({_id: "echo", value: new Code("function(x) { return x; }")}, configuration.writeConcernMax(), function(err, result) {
           test.equal(null, err);
-        
+
           db.eval("echo(5)", function(err, result) {
             test.equal(null, err);
             test.equal(5, result);
@@ -3131,7 +3132,7 @@ exports.shouldCorrectlyDefineSystemLevelFunctionAndExecuteFunction = {
  */
 exports.shouldCorrectlyOpenASimpleDbSingleServerConnection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3163,7 +3164,7 @@ exports.shouldCorrectlyOpenASimpleDbSingleServerConnection = {
  */
 exports.shouldCorrectlyOpenASimpleDbSingleServerConnectionAndCloseWithCallback = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3197,7 +3198,7 @@ exports.shouldCorrectlyOpenASimpleDbSingleServerConnectionAndCloseWithCallback =
  */
 exports.shouldCorrectlyRetrievelistCollections = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3216,7 +3217,7 @@ exports.shouldCorrectlyRetrievelistCollections = {
       // Create a collection
       var collection = db1.collection('shouldCorrectlyRetrievelistCollections');
       // Ensure the collection was created
-      collection.insert({a:1}, function(err, r) {
+      collection.insertOne({a:1}, function(err, r) {
         test.equal(null, err);
 
         // Return the information of a single collection name
@@ -3242,7 +3243,7 @@ exports.shouldCorrectlyRetrievelistCollections = {
  */
 exports.shouldCorrectlyRetrievelistCollectionsWiredTiger = {
   metadata: { requires: { topology: ['wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3255,7 +3256,7 @@ exports.shouldCorrectlyRetrievelistCollectionsWiredTiger = {
       // Create a collection
       var collection = db1.collection('shouldCorrectlyRetrievelistCollections');
       // Ensure the collection was created
-      collection.insert({a:1}, function(err, r) {
+      collection.insertOne({a:1}, function(err, r) {
         test.equal(null, err);
 
         // Return the information of a single collection name
@@ -3284,7 +3285,7 @@ exports.shouldCorrectlyRetrievelistCollectionsWiredTiger = {
  */
 exports.shouldCorrectlyAccessACollection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3336,7 +3337,7 @@ exports.shouldCorrectlyAccessACollection = {
  */
 exports.shouldCorrectlyRetrieveAllCollections = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3374,7 +3375,7 @@ exports.shouldCorrectlyRetrieveAllCollections = {
  */
 exports.shouldCorrectlyLogoutFromTheDatabase = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3403,7 +3404,7 @@ exports.shouldCorrectlyLogoutFromTheDatabase = {
             // Remove the user
             db.removeUser('user3', function(err, result) {
               test.equal(true, result);
-  
+
               db.close();
               test.done();
             });
@@ -3424,7 +3425,7 @@ exports.shouldCorrectlyLogoutFromTheDatabase = {
  */
 exports.shouldCorrectlyAuthenticateAgainstTheDatabase = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3469,7 +3470,7 @@ exports.shouldCorrectlyAuthenticateAgainstTheDatabase = {
  */
 exports.shouldCorrectlyAddUserToDb = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3509,7 +3510,7 @@ exports.shouldCorrectlyAddUserToDb = {
  */
 exports.shouldCorrectlyAddAndRemoveUser = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3563,7 +3564,7 @@ exports.shouldCorrectlyAddAndRemoveUser = {
  */
 exports.shouldCorrectlyCreateACollection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3582,7 +3583,7 @@ exports.shouldCorrectlyCreateACollection = {
         test.equal(null, err);
 
         // Insert a document in the capped collection
-        collection.insert({a:1}, configuration.writeConcernMax(), function(err, result) {
+        collection.insertOne({a:1}, configuration.writeConcernMax(), function(err, result) {
           test.equal(null, err);
 
           db.close();
@@ -3603,7 +3604,7 @@ exports.shouldCorrectlyCreateACollection = {
  */
 exports.shouldCorrectlyExecuteACommandAgainstTheServer = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3626,7 +3627,7 @@ exports.shouldCorrectlyExecuteACommandAgainstTheServer = {
           test.equal(null, err);
 
           // Insert a document in the capped collection
-          collection.insert({a:1}, configuration.writeConcernMax(), function(err, result) {
+          collection.insertOne({a:1}, configuration.writeConcernMax(), function(err, result) {
             test.equal(null, err);
 
             // Drop the collection from this world
@@ -3658,7 +3659,7 @@ exports.shouldCorrectlyExecuteACommandAgainstTheServer = {
  */
 exports.shouldCorrectlyCreateDropAndVerifyThatCollectionIsGone = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3693,7 +3694,7 @@ exports.shouldCorrectlyCreateDropAndVerifyThatCollectionIsGone = {
  */
 exports.shouldCorrectlyRenameACollection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3712,7 +3713,7 @@ exports.shouldCorrectlyRenameACollection = {
         test.equal(null, err);
 
         // Insert a document in the collection
-        collection.insert({a:1}, configuration.writeConcernMax(), function(err, result) {
+        collection.insertOne({a:1}, configuration.writeConcernMax(), function(err, result) {
           test.equal(null, err);
 
           // Retrieve the number of documents from the collection
@@ -3758,7 +3759,7 @@ exports.shouldCorrectlyRenameACollection = {
  */
 exports.shouldCreateOnDbComplexIndexOnTwoFields = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3774,7 +3775,7 @@ exports.shouldCreateOnDbComplexIndexOnTwoFields = {
       // Create a collection we want to drop later
       var collection = db.collection('more_complex_index_test');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
@@ -3795,7 +3796,7 @@ exports.shouldCreateOnDbComplexIndexOnTwoFields = {
               db.close();
               test.done();
             });
-          })              
+          })
         });
       });
     });
@@ -3812,7 +3813,7 @@ exports.shouldCreateOnDbComplexIndexOnTwoFields = {
  */
 exports.shouldCreateComplexEnsureIndexDb = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3828,7 +3829,7 @@ exports.shouldCreateComplexEnsureIndexDb = {
       // Create a collection we want to drop later
       var collection = db.collection('more_complex_ensure_index_db_test');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}
+      collection.insertMany([{a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
@@ -3866,7 +3867,7 @@ exports.shouldCreateComplexEnsureIndexDb = {
  */
 exports.shouldCorrectlyDropTheDatabase = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -3882,7 +3883,7 @@ exports.shouldCorrectlyDropTheDatabase = {
       // Create a collection
       var collection = db.collection('more_index_information_test_1');
       // Insert a bunch of documents for the index
-      collection.insert([{a:1, b:1}, {a:1, b:1}
+      collection.insertMany([{a:1, b:1}, {a:1, b:1}
         , {a:2, b:2}, {a:3, b:3}, {a:4, b:4}], configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
@@ -3927,7 +3928,7 @@ exports.shouldCorrectlyDropTheDatabase = {
  */
 exports.shouldCorrectlyRetrieveDbStats = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
@@ -3962,7 +3963,7 @@ exports.shouldCorrectlyRetrieveDbStats = {
  */
 exports.shouldCorrectlyShareConnectionPoolsAcrossMultipleDbInstances = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1});
@@ -3975,19 +3976,19 @@ exports.shouldCorrectlyShareConnectionPoolsAcrossMultipleDbInstances = {
     // REMOVE-LINE test.done();
     // BEGIN
       test.equal(null, err);
-      
+
       // Reference a different database sharing the same connections
       // for the data transfer
       var secondDb = db.db("integration_tests_2");
-      
+
       // Fetch the collections
       var multipleColl1 = db.collection("multiple_db_instances");
       var multipleColl2 = secondDb.collection("multiple_db_instances");
-      
+
       // Write a record into each and then count the records stored
-      multipleColl1.insert({a:1}, {w:1}, function(err, result) {      
-        multipleColl2.insert({a:1}, {w:1}, function(err, result) {
-          
+      multipleColl1.insertOne({a:1}, {w:1}, function(err, result) {
+        multipleColl2.insertOne({a:1}, {w:1}, function(err, result) {
+
           // Count over the results ensuring only on record in each collection
           multipleColl1.count(function(err, count) {
             test.equal(1, count);
@@ -4015,7 +4016,7 @@ exports.shouldCorrectlyShareConnectionPoolsAcrossMultipleDbInstances = {
  */
 exports['Should correctly connect with default replicasetNoOption'] = {
   metadata: { requires: { topology: 'replicaset' } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var ReplSet = configuration.require.ReplSet
@@ -4063,7 +4064,7 @@ exports['Should correctly connect with default replicasetNoOption'] = {
  */
 exports.shouldCorrectlyAuthenticate = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4080,7 +4081,7 @@ exports.shouldCorrectlyAuthenticate = {
 
       // Force the creation of the collection by inserting a document
       // Collections are not created until the first document is inserted
-      collection.insert({'a':1}, {w:1}, function(err, doc) {
+      collection.insertOne({'a':1}, {w:1}, function(err, doc) {
 
         // Use the admin database for the operation
         var adminDb = db.admin();
@@ -4115,7 +4116,7 @@ exports.shouldCorrectlyAuthenticate = {
  */
 exports.shouldCorrectlyRetrieveBuildInfo = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4138,11 +4139,11 @@ exports.shouldCorrectlyRetrieveBuildInfo = {
         // Authenticate using the newly added user
         adminDb.authenticate('admin3', 'admin3', function(err, result) {
           test.ok(result);
-          
+
           // Retrive the build information for the MongoDB instance
           adminDb.buildInfo(function(err, info) {
             test.ok(err == null);
-            
+
             adminDb.removeUser('admin3', function(err, result) {
               test.ok(result);
 
@@ -4152,7 +4153,7 @@ exports.shouldCorrectlyRetrieveBuildInfo = {
           });
         });
       });
-    });            
+    });
     // END
   }
 }
@@ -4166,7 +4167,7 @@ exports.shouldCorrectlyRetrieveBuildInfo = {
  */
 exports.shouldCorrectlyRetrieveBuildInfoUsingCommand = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4189,7 +4190,7 @@ exports.shouldCorrectlyRetrieveBuildInfoUsingCommand = {
         // Authenticate using the newly added user
         adminDb.authenticate('admin4', 'admin4', function(err, result) {
           test.ok(result);
-          
+
           // Retrive the build information using the admin command
           adminDb.command({buildInfo:1}, function(err, info) {
             test.ok(err == null);
@@ -4217,7 +4218,7 @@ exports.shouldCorrectlyRetrieveBuildInfoUsingCommand = {
  */
 exports.shouldCorrectlySetDefaultProfilingLevel = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4230,13 +4231,13 @@ exports.shouldCorrectlySetDefaultProfilingLevel = {
     // REMOVE-LINE restartAndDone
     // REMOVE-LINE test.done();
     // BEGIN
-      
+
       // Grab a collection object
       var collection = db.collection('test');
 
       // Force the creation of the collection by inserting a document
       // Collections are not created until the first document is inserted
-      collection.insert({'a':1}, {w: 1}, function(err, doc) {
+      collection.insertOne({'a':1}, {w: 1}, function(err, doc) {
 
         // Use the admin database for the operation
         var adminDb = db.admin();
@@ -4268,14 +4269,14 @@ exports.shouldCorrectlySetDefaultProfilingLevel = {
 /**
  * An example of how to use the setProfilingInfo
  * Use this command to set the Profiling level on the MongoDB server
- * 
+ *
  * @example-class Admin
  * @example-method setProfilingLevel
  * @ignore
- */ 
+ */
 exports.shouldCorrectlyChangeProfilingLevel = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4288,13 +4289,13 @@ exports.shouldCorrectlyChangeProfilingLevel = {
     // REMOVE-LINE restartAndDone
     // REMOVE-LINE test.done();
     // BEGIN
-      
+
       // Grab a collection object
       var collection = db.collection('test');
 
       // Force the creation of the collection by inserting a document
       // Collections are not created until the first document is inserted
-      collection.insert({'a':1}, {w: 1}, function(err, doc) {
+      collection.insertOne({'a':1}, {w: 1}, function(err, doc) {
 
         // Use the admin database for the operation
         var adminDb = db.admin();
@@ -4303,18 +4304,18 @@ exports.shouldCorrectlyChangeProfilingLevel = {
         adminDb.addUser('admin6', 'admin6', function(err, result) {
 
           // Authenticate using the newly added user
-          adminDb.authenticate('admin6', 'admin6', function(err, replies) {                                
-            
+          adminDb.authenticate('admin6', 'admin6', function(err, replies) {
+
             // Set the profiling level to only profile slow queries
             adminDb.setProfilingLevel('slow_only', function(err, level) {
-              
+
               // Retrive the profiling level and verify that it's set to slow_only
               adminDb.profilingLevel(function(err, level) {
                 test.equal('slow_only', level);
 
                 // Turn profiling off
                 adminDb.setProfilingLevel('off', function(err, level) {
-                  
+
                   // Retrive the profiling level and verify that it's set to off
                   adminDb.profilingLevel(function(err, level) {
                     test.equal('off', level);
@@ -4330,7 +4331,7 @@ exports.shouldCorrectlyChangeProfilingLevel = {
                         adminDb.setProfilingLevel('medium', function(err, level) {
                           test.ok(err instanceof Error);
                           test.equal("Error: illegal profiling level value medium", err.message);
-                        
+
                           adminDb.removeUser('admin6', function(err, result) {
                             test.ok(result);
 
@@ -4355,14 +4356,14 @@ exports.shouldCorrectlyChangeProfilingLevel = {
 /**
  * An example of how to use the profilingInfo
  * Use this command to pull back the profiling information currently set for Mongodb
- * 
+ *
  * @example-class Admin
  * @example-method profilingInfo
  * @ignore
- */ 
+ */
 exports.shouldCorrectlySetAndExtractProfilingInfo = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4381,7 +4382,7 @@ exports.shouldCorrectlySetAndExtractProfilingInfo = {
 
       // Force the creation of the collection by inserting a document
       // Collections are not created until the first document is inserted
-      collection.insert({'a':1}, {w: 1}, function(doc) {
+      collection.insertOne({'a':1}, {w: 1}, function(doc) {
 
         // Use the admin database for the operation
         var adminDb = db.admin();
@@ -4391,23 +4392,23 @@ exports.shouldCorrectlySetAndExtractProfilingInfo = {
 
           // Authenticate using the newly added user
           adminDb.authenticate('admin7', 'admin7', function(err, replies) {
-            
+
             // Set the profiling level to all
             adminDb.setProfilingLevel('all', function(err, level) {
-              
+
               // Execute a query command
               collection.find().toArray(function(err, items) {
 
                 // Turn off profiling
                 adminDb.setProfilingLevel('off', function(err, level) {
-                  
+
                   // Retrive the profiling information
                   adminDb.profilingInfo(function(err, infos) {
                     test.ok(infos.constructor == Array);
                     test.ok(infos.length >= 1);
                     test.ok(infos[0].ts.constructor == Date);
                     test.ok(infos[0].millis.constructor == Number);
-                  
+
                     adminDb.removeUser('admin7', function(err, result) {
                       test.ok(result);
 
@@ -4429,18 +4430,18 @@ exports.shouldCorrectlySetAndExtractProfilingInfo = {
 /**
  * An example of how to use the validateCollection command
  * Use this command to check that a collection is valid (not corrupt) and to get various statistics.
- * 
+ *
  * @example-class Admin
  * @example-method validateCollection
  * @ignore
  */
 exports.shouldCorrectlyCallValidateCollection = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
-    
+
     db.open(function(err, db) {
     // LINE var MongoClient = require('mongodb').MongoClient,
     // LINE   test = require('assert');
@@ -4452,27 +4453,27 @@ exports.shouldCorrectlyCallValidateCollection = {
 
       // Grab a collection object
       var collection = db.collection('test');
-        
+
       // Force the creation of the collection by inserting a document
       // Collections are not created until the first document is inserted
-      collection.insert({'a':1}, {w: 1}, function(err, doc) {
-        
+      collection.insertOne({'a':1}, {w: 1}, function(err, doc) {
+
         // Use the admin database for the operation
         var adminDb = db.admin();
-          
+
         // Add the new user to the admin database
         adminDb.addUser('admin8', 'admin8', function(err, result) {
-          
+
           // Authenticate using the newly added user
           adminDb.authenticate('admin8', 'admin8', function(err, replies) {
-            
+
             // Validate the 'test' collection
             adminDb.validateCollection('test', function(err, doc) {
 
               // Pre 1.9.1 servers
               if(doc.result != null) {
                 test.ok(doc.result != null);
-                test.ok(doc.result.match(/firstExtent/) != null);                    
+                test.ok(doc.result.match(/firstExtent/) != null);
               } else {
                 test.ok(doc.firstExtent != null);
               }
@@ -4484,7 +4485,7 @@ exports.shouldCorrectlyCallValidateCollection = {
                 test.done();
               });
             });
-          });                
+          });
         });
       });
     });
@@ -4493,14 +4494,14 @@ exports.shouldCorrectlyCallValidateCollection = {
 
 /**
  * An example of how to add a user to the admin database
- * 
+ *
  * @example-class Admin
  * @example-method ping
  * @ignore
  */
 exports.shouldCorrectlyPingTheMongoDbInstance = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4516,14 +4517,14 @@ exports.shouldCorrectlyPingTheMongoDbInstance = {
 
       // Use the admin database for the operation
       var adminDb = db.admin();
-        
+
       // Add the new user to the admin database
       adminDb.addUser('admin9', 'admin9', function(err, result) {
-        
+
         // Authenticate using the newly added user
         adminDb.authenticate('admin9', 'admin9', function(err, result) {
           test.ok(result);
-          
+
           // Ping the server
           adminDb.ping(function(err, pingResult) {
             test.equal(null, err);
@@ -4544,16 +4545,16 @@ exports.shouldCorrectlyPingTheMongoDbInstance = {
 
 /**
  * An example of how add a user, authenticate and logout
- * 
+ *
  * @example-class Admin
  * @example-method logout
  * @ignore
  */
 exports.shouldCorrectlyUseLogoutFunction = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
-  test: function(configure, test) {  
+  test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
 
     db.open(function(err, db) {
@@ -4567,18 +4568,18 @@ exports.shouldCorrectlyUseLogoutFunction = {
 
       // Use the admin database for the operation
       var adminDb = db.admin();
-        
+
       // Add the new user to the admin database
       adminDb.addUser('admin10', 'admin10', function(err, result) {
-        
+
         // Authenticate using the newly added user
         adminDb.authenticate('admin10', 'admin10', function(err, result) {
           test.ok(result);
-          
+
           // Logout the user
           adminDb.logout(function(err, result) {
             test.equal(true, result);
-            
+
             adminDb.removeUser('admin10', function(err, result) {
               test.ok(result);
 
@@ -4586,7 +4587,7 @@ exports.shouldCorrectlyUseLogoutFunction = {
               test.done();
             });
           });
-        });                
+        });
       });
     });
     // END
@@ -4595,16 +4596,16 @@ exports.shouldCorrectlyUseLogoutFunction = {
 
 /**
  * An example of how to add a user to the admin database
- * 
+ *
  * @example-class Admin
  * @example-method addUser
  * @ignore
  */
 exports.shouldCorrectlyAddAUserToAdminDb = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
-  test: function(configure, test) {  
+  test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
 
     db.open(function(err, db) {
@@ -4618,21 +4619,21 @@ exports.shouldCorrectlyAddAUserToAdminDb = {
 
       // Use the admin database for the operation
       var adminDb = db.admin();
-        
+
       // Add the new user to the admin database
       adminDb.addUser('admin11', 'admin11', function(err, result) {
-        
+
         // Authenticate using the newly added user
         adminDb.authenticate('admin11', 'admin11', function(err, result) {
           test.ok(result);
-          
+
           adminDb.removeUser('admin11', function(err, result) {
             test.ok(result);
 
             db.close();
             test.done();
           });
-        });                
+        });
       });
     });
   }
@@ -4640,16 +4641,16 @@ exports.shouldCorrectlyAddAUserToAdminDb = {
 
 /**
  * An example of how to remove a user from the admin database
- * 
+ *
  * @example-class Admin
  * @example-method removeUser
  * @ignore
  */
 exports.shouldCorrectlyAddAUserAndRemoveItFromAdminDb = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
-  test: function(configure, test) {  
+  test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
 
     db.open(function(err, db) {
@@ -4663,19 +4664,19 @@ exports.shouldCorrectlyAddAUserAndRemoveItFromAdminDb = {
 
       // Use the admin database for the operation
       var adminDb = db.admin();
-        
+
       // Add the new user to the admin database
       adminDb.addUser('admin12', 'admin12', function(err, result) {
-        
+
         // Authenticate using the newly added user
         adminDb.authenticate('admin12', 'admin12', function(err, result) {
           test.ok(result);
-          
+
           // Remove the user
-          adminDb.removeUser('admin12', function(err, result) {              
+          adminDb.removeUser('admin12', function(err, result) {
             test.equal(null, err);
             test.equal(true, result);
-            
+
             // Authenticate using the removed user should fail
             adminDb.authenticate('admin12', 'admin12', function(err, result) {
               test.ok(err != null);
@@ -4684,8 +4685,8 @@ exports.shouldCorrectlyAddAUserAndRemoveItFromAdminDb = {
               db.close();
               test.done();
             });
-          })            
-        });                
+          })
+        });
       });
     });
     // END
@@ -4694,16 +4695,16 @@ exports.shouldCorrectlyAddAUserAndRemoveItFromAdminDb = {
 
 /**
  * An example of listing all available databases.
- * 
+ *
  * @example-class Admin
  * @example-method listDatabases
  * @ignore
  */
 exports.shouldCorrectlyListAllAvailableDatabases = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
-  test: function(configure, test) {  
+  test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
 
     db.open(function(err, db) {
@@ -4717,12 +4718,12 @@ exports.shouldCorrectlyListAllAvailableDatabases = {
 
       // Use the admin database for the operation
       var adminDb = db.admin();
-        
+
       // List all the available databases
       adminDb.listDatabases(function(err, dbs) {
         test.equal(null, err);
         test.ok(dbs.databases.length > 0);
-        
+
         db.close();
         test.done();
       });
@@ -4740,7 +4741,7 @@ exports.shouldCorrectlyListAllAvailableDatabases = {
  */
 exports.shouldCorrectlyRetrieveServerInfo = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4759,7 +4760,7 @@ exports.shouldCorrectlyRetrieveServerInfo = {
 
       // Force the creation of the collection by inserting a document
       // Collections are not created until the first document is inserted
-      collection.insert({'a':1}, {w: 1}, function(err, doc) {
+      collection.insertOne({'a':1}, {w: 1}, function(err, doc) {
 
         // Use the admin database for the operation
         var adminDb = db.admin();
@@ -4769,12 +4770,12 @@ exports.shouldCorrectlyRetrieveServerInfo = {
 
           // Authenticate using the newly added user
           adminDb.authenticate('admin13', 'admin13', function(err, result) {
-           
+
             // Retrive the server Info
             adminDb.serverStatus(function(err, info) {
               test.equal(null, err);
               test.ok(info != null);
-             
+
               adminDb.removeUser('admin13', function(err, result) {
                 test.ok(result);
 
@@ -4799,7 +4800,7 @@ exports.shouldCorrectlyRetrieveServerInfo = {
  */
 exports.shouldCorrectlyRetrieveReplSetGetStatus = {
   metadata: { requires: { topology: 'single' } },
-  
+
   // The actual test we wish to run
   test: function(configure, test) {
     var db = configure.newDbInstance({w:1}, {poolSize:1});
@@ -4818,7 +4819,7 @@ exports.shouldCorrectlyRetrieveReplSetGetStatus = {
 
       // Force the creation of the collection by inserting a document
       // Collections are not created until the first document is inserted
-      collection.insert({'a':1}, {w: 1}, function(err, doc) {
+      collection.insertOne({'a':1}, {w: 1}, function(err, doc) {
 
         // Use the admin database for the operation
         var adminDb = db.admin();
@@ -4830,9 +4831,9 @@ exports.shouldCorrectlyRetrieveReplSetGetStatus = {
 
           // Authenticate using the newly added user
           adminDb.authenticate('admin14', 'admin14', function(err, result) {
-            test.equal(null, err); 
+            test.equal(null, err);
             test.equal(true, result);
-           
+
             // Retrive the server Info, returns error if we are not
             // running a replicaset
             adminDb.replSetGetStatus(function(err, info) {
@@ -4871,7 +4872,7 @@ exports.shouldCorrectlyExecuteToArray = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -4889,7 +4890,7 @@ exports.shouldCorrectlyExecuteToArray = {
       var collection = db.collection('test_array');
 
       // Insert a test document
-      collection.insert({'b':[1, 2, 3]}, configuration.writeConcernMax(), function(err, ids) {
+      collection.insertOne({'b':[1, 2, 3]}, configuration.writeConcernMax(), function(err, ids) {
 
         // Retrieve all the documents in the collection
         collection.find().toArray(function(err, documents) {
@@ -4916,7 +4917,7 @@ exports.shouldCorrectlyFailToArrayDueToFinishedEachOperation = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -4934,7 +4935,7 @@ exports.shouldCorrectlyFailToArrayDueToFinishedEachOperation = {
       var collection = db.collection('test_to_a_after_each');
 
       // Insert a document in the collection
-      collection.insert({'a':1}, configuration.writeConcernMax(), function(err, ids) {
+      collection.insertOne({'a':1}, configuration.writeConcernMax(), function(err, ids) {
 
         // Grab a cursor
         var cursor = collection.find();
@@ -4970,7 +4971,7 @@ exports['Should correctly iterate over cursor using forEach'] = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -4988,7 +4989,7 @@ exports['Should correctly iterate over cursor using forEach'] = {
       var collection = db.collection('test_to_a_after_for_each');
 
       // Insert a document in the collection
-      collection.insert({'a':1}, configuration.writeConcernMax(), function(err, ids) {
+      collection.insertOne({'a':1}, configuration.writeConcernMax(), function(err, ids) {
         // Count of documents returned
         var count = 0;
         // Grab a cursor
@@ -5020,7 +5021,7 @@ exports['Should correctly rewind and restart cursor'] = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5045,7 +5046,7 @@ exports['Should correctly rewind and restart cursor'] = {
       var collection = db.collection('Should_correctly_rewind_and_restart_cursor');
 
       // insert all docs
-      collection.insert(docs, configuration.writeConcernMax(), function(err, result) {
+      collection.insertMany(docs, configuration.writeConcernMax(), function(err, result) {
         test.equal(null, err);
 
         // Grab a cursor using the find
@@ -5081,7 +5082,7 @@ exports.shouldCorrectlyUseCursorCountFunction = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5099,7 +5100,7 @@ exports.shouldCorrectlyUseCursorCountFunction = {
       var collection = db.collection('cursor_count_collection');
 
       // Insert some docs
-      collection.insert([{a:1}, {a:2}], configuration.writeConcernMax(), function(err, docs) {
+      collection.insertMany([{a:1}, {a:2}], configuration.writeConcernMax(), function(err, docs) {
         test.equal(null, err);
 
         // Do a find and get the cursor count
@@ -5127,7 +5128,7 @@ exports.shouldCorrectlyPeformSimpleSorts = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5145,7 +5146,7 @@ exports.shouldCorrectlyPeformSimpleSorts = {
       var collection = db.collection('simple_sort_collection');
 
       // Insert some documents we can sort on
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
         test.equal(null, err);
 
         // Do normal ascending sort
@@ -5179,7 +5180,7 @@ exports.shouldCorrectlyPeformLimitOnCursor = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5197,7 +5198,7 @@ exports.shouldCorrectlyPeformLimitOnCursor = {
       var collection = db.collection('simple_limit_collection');
 
       // Insert some documents we can sort on
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
         test.equal(null, err);
 
         // Limit to only one document returned
@@ -5225,7 +5226,7 @@ exports.shouldCorrectlyPeformSkipOnCursor = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5243,7 +5244,7 @@ exports.shouldCorrectlyPeformSkipOnCursor = {
       var collection = db.collection('simple_skip_collection');
 
       // Insert some documents we can sort on
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
         test.equal(null, err);
 
         // Skip one document
@@ -5272,7 +5273,7 @@ exports.shouldCorrectlyPeformBatchSizeOnCursor = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5290,7 +5291,7 @@ exports.shouldCorrectlyPeformBatchSizeOnCursor = {
       var collection = db.collection('simple_batch_size_collection');
 
       // Insert some documents we can sort on
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
         test.equal(null, err);
 
         // Do normal ascending sort
@@ -5318,7 +5319,7 @@ exports.shouldCorrectlyPeformNextObjectOnCursor = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5336,7 +5337,7 @@ exports.shouldCorrectlyPeformNextObjectOnCursor = {
       var collection = db.collection('simple_next_object_collection');
 
       // Insert some documents we can sort on
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
         test.equal(null, err);
 
         // Do normal ascending sort
@@ -5364,7 +5365,7 @@ exports.shouldCorrectlyPeformSimpleExplainCursor = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5382,7 +5383,7 @@ exports.shouldCorrectlyPeformSimpleExplainCursor = {
       var collection = db.collection('simple_explain_collection');
 
       // Insert some documents we can sort on
-      collection.insert([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
+      collection.insertMany([{a:1}, {a:2}, {a:3}], configuration.writeConcernMax(), function(err, docs) {
         test.equal(null, err);
 
         // Do normal ascending sort
@@ -5409,7 +5410,7 @@ exports.shouldStreamDocumentsUsingTheStreamFunction = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5433,7 +5434,7 @@ exports.shouldStreamDocumentsUsingTheStreamFunction = {
       var collection = db.collection('test_stream_function');
 
       // Insert documents into collection
-      collection.insert(docs, configuration.writeConcernMax(), function(err, ids) {
+      collection.insertMany(docs, configuration.writeConcernMax(), function(err, ids) {
         // Peform a find to get a cursor
         var stream = collection.find().stream();
 
@@ -5463,7 +5464,7 @@ exports.shouldStreamDocumentsUsingTheIsCloseFunction = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5487,7 +5488,7 @@ exports.shouldStreamDocumentsUsingTheIsCloseFunction = {
       var collection = db.collection('test_is_close_function_on_cursor');
 
       // Insert documents into collection
-      collection.insert(docs, configuration.writeConcernMax(), function(err, ids) {
+      collection.insertMany(docs, configuration.writeConcernMax(), function(err, ids) {
         // Peform a find to get a cursor
         var cursor = collection.find();
 
@@ -5521,7 +5522,7 @@ exports.shouldStreamDocumentsUsingTheCloseFunction = {
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
@@ -5545,7 +5546,7 @@ exports.shouldStreamDocumentsUsingTheCloseFunction = {
       var collection = db.collection('test_close_function_on_cursor');
 
       // Insert documents into collection
-      collection.insert(docs, configuration.writeConcernMax(), function(err, ids) {
+      collection.insertMany(docs, configuration.writeConcernMax(), function(err, ids) {
         // Peform a find to get a cursor
         var cursor = collection.find();
 
@@ -5576,7 +5577,7 @@ exports.shouldStreamDocumentsUsingTheCloseFunction = {
  */
 exports.shouldStreamDocumentsUsingTheCursorStreamPauseFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -5601,7 +5602,7 @@ exports.shouldStreamDocumentsUsingTheCursorStreamPauseFunction = {
       var collection = db.collection('test_cursorstream_pause');
 
       // Insert documents into collection
-      collection.insert(docs, {w:1}, function(err, ids) {
+      collection.insertMany(docs, {w:1}, function(err, ids) {
         // Peform a find to get a cursor
         var stream = collection.find().stream();
 
@@ -5639,7 +5640,7 @@ exports.shouldStreamDocumentsUsingTheCursorStreamPauseFunction = {
  */
 exports.shouldStreamDocumentsUsingTheCursorStreamDestroyFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:0}, {poolSize:1});
@@ -5663,7 +5664,7 @@ exports.shouldStreamDocumentsUsingTheCursorStreamDestroyFunction = {
       var collection = db.collection('test_cursorstream_destroy');
 
       // Insert documents into collection
-      collection.insert(docs, {w:1}, function(err, ids) {
+      collection.insertMany(docs, {w:1}, function(err, ids) {
         // Peform a find to get a cursor
         var stream = collection.find().stream();
 
@@ -5699,7 +5700,7 @@ exports.shouldStreamDocumentsUsingTheCursorStreamDestroyFunction = {
  */
 exports['Should correctly connect to a replicaset'] = {
   metadata: { requires: { topology: 'replicaset' } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var mongo = configuration.require
@@ -5724,7 +5725,7 @@ exports['Should correctly connect to a replicaset'] = {
       test.equal(null, err);
       test.ok(db != null);
 
-      db.collection("replicaset_mongo_client_collection").update({a:1}, {b:1}, {upsert:true}, function(err, result) {
+      db.collection("replicaset_mongo_client_collection").updateOne({a:1}, {b:1}, {upsert:true}, function(err, result) {
         test.equal(null, err);
         test.equal(1, result.result.n);
 
@@ -5745,7 +5746,7 @@ exports['Should correctly connect to a replicaset'] = {
  */
 exports['Should connect to mongos proxies using connectiong string'] = {
   metadata: { requires: { topology: 'mongos' } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var MongoClient = configuration.require.MongoClient;
@@ -5765,13 +5766,13 @@ exports['Should connect to mongos proxies using connectiong string'] = {
       test.equal(null, err);
       test.ok(db != null);
 
-      db.collection("replicaset_mongo_client_collection").update({a:1}, {b:1}, {upsert:true}, function(err, result) {
+      db.collection("replicaset_mongo_client_collection").updateOne({a:1}, {b:1}, {upsert:true}, function(err, result) {
         test.equal(null, err);
         test.equal(1, result);
 
         db.close();
         test.done();
-      });    
+      });
     });
     // END
   }
@@ -5788,13 +5789,13 @@ exports['Should correctly connect using MongoClient to a single server using con
   // Add a tag that our runner can trigger on
   // in this case we are setting that node needs to be higher than 0.10.X to run
   metadata: { requires: { topology: 'single'} },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var MongoClient = configuration.require.MongoClient
       , Server = configuration.require.Server;
     // DOC_START
-    // Connect using the connection string  
+    // Connect using the connection string
     MongoClient.connect("mongodb://localhost:27017/integration_tests", {native_parser:true}, function(err, db) {
     // LINE var MongoClient = require('mongodb').MongoClient,
     // LINE   test = require('assert');
@@ -5805,7 +5806,7 @@ exports['Should correctly connect using MongoClient to a single server using con
     // BEGIN
       test.equal(null, err);
 
-      db.collection('mongoclient_test').update({a:1}, {b:1}, {upsert:true}, function(err, result) {
+      db.collection('mongoclient_test').updateOne({a:1}, {b:1}, {upsert:true}, function(err, result) {
         test.equal(null, err);
         test.equal(1, result.result.n);
 
@@ -5833,7 +5834,7 @@ exports['Should correctly connect using MongoClient to a single server using con
  */
 exports.shouldCorrectlyGenerate12ByteStringFromTimestamp = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var ObjectID = configuration.require.ObjectID;
@@ -5846,10 +5847,10 @@ exports.shouldCorrectlyGenerate12ByteStringFromTimestamp = {
     var timestamp = Math.floor(new Date().getTime()/1000);
     // Create a date with the timestamp
     var timestampDate = new Date(timestamp*1000);
-    
+
     // Create a new ObjectID with a specific timestamp
     var objectId = new ObjectID(timestamp);
-    
+
     // Get the timestamp and validate correctness
     test.equal(timestampDate.toString(), objectId.getTimestamp().toString());
     test.done();
@@ -5866,7 +5867,7 @@ exports.shouldCorrectlyGenerate12ByteStringFromTimestamp = {
  */
 exports.shouldCorrectlyRetrieve24CharacterHexStringFromToHexString = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var ObjectID = configuration.require.ObjectID;
@@ -5876,7 +5877,7 @@ exports.shouldCorrectlyRetrieve24CharacterHexStringFromToHexString = {
     // REMOVE-LINE test.done();
     // BEGIN
     // Create a new ObjectID
-    var objectId = new ObjectID();  
+    var objectId = new ObjectID();
     // Verify that the hex string is 24 characters long
     test.equal(24, objectId.toHexString().length);
     test.done();
@@ -5893,7 +5894,7 @@ exports.shouldCorrectlyRetrieve24CharacterHexStringFromToHexString = {
  */
 exports.shouldCorrectlyGetAndSetObjectIDUsingGenerationTimeProperty = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var ObjectID = configuration.require.ObjectID;
@@ -5903,7 +5904,7 @@ exports.shouldCorrectlyGetAndSetObjectIDUsingGenerationTimeProperty = {
     // REMOVE-LINE test.done();
     // BEGIN
     // Create a new ObjectID
-    var objectId = new ObjectID();  
+    var objectId = new ObjectID();
     // Get the generation time
     var generationTime = objectId.generationTime;
     // Add 1000 miliseconds to the generation time
@@ -5912,7 +5913,7 @@ exports.shouldCorrectlyGetAndSetObjectIDUsingGenerationTimeProperty = {
     // Create a timestamp
     var timestampDate = new Date();
     timestampDate.setTime((generationTime + 1000) * 1000);
-    
+
     // Get the timestamp and validate correctness
     test.equal(timestampDate.toString(), objectId.getTimestamp().toString());
     test.done();
@@ -5929,7 +5930,7 @@ exports.shouldCorrectlyGetAndSetObjectIDUsingGenerationTimeProperty = {
  */
 exports.shouldCorrectlyTransformObjectIDToHexAndObjectId = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var ObjectID = configuration.require.ObjectID;
@@ -5962,7 +5963,7 @@ exports.shouldCorrectlyTransformObjectIDToHexAndObjectId = {
  */
 exports.shouldCorrectlyDifferentiateBetweenObjectIdInstances = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var ObjectID = configuration.require.ObjectID;
@@ -5995,7 +5996,7 @@ exports.shouldCorrectlyDifferentiateBetweenObjectIdInstances = {
  */
 exports.shouldCorrectlyUseCreateFromTime = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var ObjectID = configuration.require.ObjectID;
@@ -6026,7 +6027,7 @@ exports.shouldCorrectlyUseCreateFromTime = {
  */
 exports.shouldCorrectlyExecuteGridStoreExistsByObjectId = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6093,7 +6094,7 @@ exports.shouldCorrectlyExecuteGridStoreExistsByObjectId = {
  */
 exports.shouldCorrectlyExecuteGridStoreList = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6211,7 +6212,7 @@ exports.shouldCorrectlyExecuteGridStoreList = {
  */
 exports.shouldCorrectlyReadlinesAndPutLines = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6260,7 +6261,7 @@ exports.shouldCorrectlyReadlinesAndPutLines = {
  */
 exports.shouldCorrectlyUnlink = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6341,7 +6342,7 @@ exports.shouldCorrectlyUnlink = {
  */
 exports.shouldCorrectlyWriteAndReadJpgImage = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6400,7 +6401,7 @@ exports.shouldCorrectlyWriteAndReadJpgImage = {
  */
 exports.shouldCorrectlySaveSimpleFileToGridStoreUsingFilename = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6454,7 +6455,7 @@ exports.shouldCorrectlySaveSimpleFileToGridStoreUsingFilename = {
  */
 exports.shouldCorrectlySaveSimpleFileToGridStoreUsingObjectID = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6511,7 +6512,7 @@ exports.shouldCorrectlySaveSimpleFileToGridStoreUsingObjectID = {
  */
 exports.shouldCorrectlySaveSimpleFileToGridStoreUsingWriteFile = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6567,7 +6568,7 @@ exports.shouldCorrectlySaveSimpleFileToGridStoreUsingWriteFile = {
  */
 exports.shouldCorrectlySaveSimpleFileToGridStoreUsingWriteFileWithHandle = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6626,7 +6627,7 @@ exports.shouldCorrectlySaveSimpleFileToGridStoreUsingWriteFileWithHandle = {
  */
 exports.shouldCorrectlySaveSimpleFileToGridStoreUsingWriteWithStringsAndBuffers = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6684,7 +6685,7 @@ exports.shouldCorrectlySaveSimpleFileToGridStoreUsingWriteWithStringsAndBuffers 
  */
 exports.shouldCorrectlySaveSimpleFileToGridStoreUsingClose = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6734,7 +6735,7 @@ exports.shouldCorrectlySaveSimpleFileToGridStoreUsingClose = {
  */
 exports.shouldCorrectlyAccessChunkCollection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6780,7 +6781,7 @@ exports.shouldCorrectlyAccessChunkCollection = {
  */
 exports.shouldCorrectlySaveSimpleFileToGridStoreUsingCloseAndThenUnlinkIt = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6845,7 +6846,7 @@ exports.shouldCorrectlySaveSimpleFileToGridStoreUsingCloseAndThenUnlinkIt = {
  */
 exports.shouldCorrectlyAccessFilesCollection = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6891,7 +6892,7 @@ exports.shouldCorrectlyAccessFilesCollection = {
  */
 exports.shouldCorrectlyPutACoupleOfLinesInGridStoreAndUseReadlines = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -6953,7 +6954,7 @@ exports.shouldCorrectlyPutACoupleOfLinesInGridStoreAndUseReadlines = {
  */
 exports.shouldCorrectlyPutACoupleOfLinesInGridStoreAndUseInstanceReadlines = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7020,7 +7021,7 @@ exports.shouldCorrectlyPutACoupleOfLinesInGridStoreAndUseInstanceReadlines = {
  */
 exports.shouldCorrectlyPutACoupleOfLinesInGridStoreRead = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7071,7 +7072,7 @@ exports.shouldCorrectlyPutACoupleOfLinesInGridStoreRead = {
  */
 exports.shouldCorrectlyReadFileUsingStream = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7095,28 +7096,28 @@ exports.shouldCorrectlyReadFileUsingStream = {
 
       var readLen = 0;
       var gotEnd = 0;
-      
+
       // Open the file we are writting to
       gridStoreW.open(function(err, gs) {
         // Write the file content
         gs.write(data, function(err, gs) {
           // Flush the file to GridFS
           gs.close(function(err, result) {
-            
+
             // Open the read file
             gridStoreR.open(function(err, gs) {
               // Create a stream to the file
               var stream = gs.stream();
-              
+
               // Register events
               stream.on("data", function(chunk) {
                 // Record the length of the file
                 readLen += chunk.length;
               });
 
-              stream.on("end", function() {              
+              stream.on("end", function() {
                 // Verify the correctness of the read data
-                test.equal(data.length, readLen);              
+                test.equal(data.length, readLen);
                 db.close();
                 test.done();
               });
@@ -7138,13 +7139,13 @@ exports.shouldCorrectlyReadFileUsingStream = {
  */
 exports.shouldCorrectlyStreamWriteToGridStoreObject = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
       , ObjectID = configuration.require.ObjectID;
     var client = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
-    client.open(function(err, client) {      
+    client.open(function(err, client) {
     // LINE var MongoClient = require('mongodb').MongoClient,
     // LINE   GridStore = require('mongodb').GridStore,
     // LINE   ObjectID = require('mongodb').ObjectID,
@@ -7184,10 +7185,10 @@ exports.shouldCorrectlyStreamWriteToGridStoreObject = {
  */
 exports.shouldCorrectlyPipeAGridFsToAfile = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
-    var GridStore = configuration.require.GridStore;    
+    var GridStore = configuration.require.GridStore;
     var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1});
     db.open(function(err, db) {
     // LINE var MongoClient = require('mongodb').MongoClient,
@@ -7202,7 +7203,7 @@ exports.shouldCorrectlyPipeAGridFsToAfile = {
       var gridStoreWrite = new GridStore(db, "test_gs_read_stream_pipe", "w", {chunkSize:1024});
       gridStoreWrite.writeFile("./test/functional/data/test_gs_weird_bug.png", function(err, result) {
         test.equal(null, err);
-        test.ok(result != null);        
+        test.ok(result != null);
         // Open the gridStore for reading and pipe to a file
         var gridStore = new GridStore(db, "test_gs_read_stream_pipe", "r");
         gridStore.open(function(err, gridStore) {
@@ -7215,15 +7216,15 @@ exports.shouldCorrectlyPipeAGridFsToAfile = {
             // Read the original content
             var originalData = fs.readFileSync("./test/functional/data/test_gs_weird_bug.png");
             // Ensure we are doing writing before attempting to open the file
-            fs.readFile("./test_gs_weird_bug_streamed.tmp", function(err, streamedData) {                      
+            fs.readFile("./test_gs_weird_bug_streamed.tmp", function(err, streamedData) {
               // Compare the data
               for(var i = 0; i < originalData.length; i++) {
                 test.equal(originalData[i], streamedData[i])
               }
-              
+
               // Close the database
               db.close();
-              test.done();          
+              test.done();
             });
           });
 
@@ -7245,7 +7246,7 @@ exports.shouldCorrectlyPipeAGridFsToAfile = {
  */
 exports.shouldCorrectlySeekWithBuffer = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore;
@@ -7364,7 +7365,7 @@ exports.shouldCorrectlySeekWithBuffer = {
  */
 exports.shouldCorrectlyRewingAndTruncateOnWrite = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7435,7 +7436,7 @@ exports.shouldCorrectlyRewingAndTruncateOnWrite = {
  */
 exports.shouldCorrectlyDetectEOF = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore;
@@ -7481,7 +7482,7 @@ exports.shouldCorrectlyDetectEOF = {
  */
 exports.shouldCorrectlyExecuteGridstoreTell = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore;
@@ -7538,7 +7539,7 @@ exports.shouldCorrectlyExecuteGridstoreTell = {
  */
 exports.shouldCorrectlyRetrieveSingleCharacterUsingGetC = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore;
@@ -7589,7 +7590,7 @@ exports.shouldCorrectlyRetrieveSingleCharacterUsingGetC = {
  */
 exports.shouldCorrectlyRetrieveSingleCharacterUsingGetC = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7665,7 +7666,7 @@ exports.shouldCorrectlyRetrieveSingleCharacterUsingGetC = {
  */
 exports.shouldStreamDocumentsUsingTheReadStreamPauseFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7683,15 +7684,15 @@ exports.shouldStreamDocumentsUsingTheReadStreamPauseFunction = {
       var fileId = new ObjectID();
       // Create a file
       var file = new GridStore(db, fileId, "w", {chunk_size:5});
-      file.open(function(err, file) {      
+      file.open(function(err, file) {
         // Write some content and flush to disk
-        file.write('Hello world', function(err, file) {        
+        file.write('Hello world', function(err, file) {
           file.close(function(err, result) {
-            
+
             // Let's create a read file
             file = new GridStore(db, fileId, "r");
             // Open the file
-            file.open(function(err, file) {            
+            file.open(function(err, file) {
               // Peform a find to get a cursor
               var stream = file.stream();
 
@@ -7702,17 +7703,17 @@ exports.shouldStreamDocumentsUsingTheReadStreamPauseFunction = {
                 // Restart the stream after 1 miliscecond
                 setTimeout(function() {
                   stream.resume();
-                }, 100);          
+                }, 100);
               });
 
               // For each data item
               stream.on("end", function(item) {
                 db.close();
-                test.done();          
+                test.done();
               });
             });
-          });        
-        });      
+          });
+        });
       });
     });
     // END
@@ -7728,7 +7729,7 @@ exports.shouldStreamDocumentsUsingTheReadStreamPauseFunction = {
  */
 exports.shouldStreamDocumentsUsingTheReadStreamResumeFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7746,16 +7747,16 @@ exports.shouldStreamDocumentsUsingTheReadStreamResumeFunction = {
       var fileId = new ObjectID();
       // Create a file
       var file = new GridStore(db, fileId, "w", {chunk_size:5});
-      file.open(function(err, file) {      
+      file.open(function(err, file) {
         // Write some content and flush to disk
         var fileBody = 'Hello world';
-        file.write(fileBody, function(err, file) {        
+        file.write(fileBody, function(err, file) {
           file.close(function(err, result) {
             // Let's create a read file
             file = new GridStore(db, fileId, "r");
 
             // Open the file
-            file.open(function(err, file) {            
+            file.open(function(err, file) {
               // Peform a find to get a cursor
               var stream = file.stream(true);
 
@@ -7783,14 +7784,14 @@ exports.shouldStreamDocumentsUsingTheReadStreamResumeFunction = {
                 // Have we received the same file back?
                 test.equal(fileBuffer, fileBody);
                 db.close();
-                test.done();          
+                test.done();
               });
 
               // Resume the stream
               stream.resume();
             });
-          });        
-        });      
+          });
+        });
       });
     });
     // END
@@ -7806,7 +7807,7 @@ exports.shouldStreamDocumentsUsingTheReadStreamResumeFunction = {
  */
 exports.shouldStreamDocumentsUsingTheReadStreamDestroyFunction = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var GridStore = configuration.require.GridStore
@@ -7824,15 +7825,15 @@ exports.shouldStreamDocumentsUsingTheReadStreamDestroyFunction = {
       var fileId = new ObjectID();
       // Create a file
       var file = new GridStore(db, fileId, "w");
-      file.open(function(err, file) {      
+      file.open(function(err, file) {
         // Write some content and flush to disk
-        file.write('Hello world', function(err, file) {        
+        file.write('Hello world', function(err, file) {
           file.close(function(err, result) {
-            
+
             // Let's create a read file
             file = new GridStore(db, fileId, "r");
             // Open the file
-            file.open(function(err, file) {            
+            file.open(function(err, file) {
               // Peform a find to get a cursor
               var stream = file.stream();
 
@@ -7845,11 +7846,11 @@ exports.shouldStreamDocumentsUsingTheReadStreamDestroyFunction = {
               // When the stream is done
               stream.on("end", function() {
                 db.close();
-                test.done();          
-              });        
+                test.done();
+              });
             });
-          });        
-        });      
+          });
+        });
       });
     });
     // END
@@ -7865,13 +7866,13 @@ exports.shouldStreamDocumentsUsingTheReadStreamDestroyFunction = {
 /**
  * Example of a simple ordered insert/update/upsert/remove ordered collection
  *
- * @example-class OrderedBulkOperation
- * @example-method update
+ * @example-class Collection
+ * @example-method initializeOrderedBulkOp
  * @ignore
  */
 exports['Should correctly execute ordered batch with no errors using write commands'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -7901,12 +7902,12 @@ exports['Should correctly execute ordered batch with no errors using write comma
         test.equal(1, result.nMatched);
         test.ok(1 == result.nModified || result.nModified == null);
         test.equal(1, result.nRemoved);
-        
+
         var upserts = result.getUpsertedIds();
         test.equal(1, upserts.length);
         test.equal(2, upserts[0].index);
         test.ok(upserts[0]._id != null);
-        
+
         var upsert = result.getUpsertedIdAt(0);
         test.equal(2, upsert.index);
         test.ok(upsert._id != null);
@@ -7924,13 +7925,13 @@ exports['Should correctly execute ordered batch with no errors using write comma
  * Example of a simple ordered insert/update/upsert/remove ordered collection
  *
  *
- * @example-class UnorderedBulkOperation
- * @example-method update
+ * @example-class Collection
+ * @example-method initializeUnorderedBulkOp
  * @ignore
  */
 exports['Should correctly execute unordered batch with no errors'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -7966,7 +7967,7 @@ exports['Should correctly execute unordered batch with no errors'] = {
         test.equal(1, upserts.length);
         test.equal(2, upserts[0].index);
         test.ok(upserts[0]._id != null);
-        
+
         var upsert = result.getUpsertedIdAt(0);
         test.equal(2, upsert.index);
         test.ok(upsert._id != null);
@@ -7995,7 +7996,7 @@ exports['Should correctly execute unordered batch with no errors'] = {
  */
 exports['Should correctly execute insertOne operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8029,7 +8030,7 @@ exports['Should correctly execute insertOne operation'] = {
  */
 exports['Should correctly execute insertMany operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8063,7 +8064,7 @@ exports['Should correctly execute insertMany operation'] = {
  */
 exports['Should correctly execute updateOne operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8100,7 +8101,7 @@ exports['Should correctly execute updateOne operation'] = {
  */
 exports['Should correctly execute updateMany operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8142,7 +8143,7 @@ exports['Should correctly execute updateMany operation'] = {
  */
 exports['Should correctly execute removeOne operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8181,7 +8182,7 @@ exports['Should correctly execute removeOne operation'] = {
  */
 exports['Should correctly execute removeMany operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8222,7 +8223,7 @@ exports['Should correctly execute removeMany operation'] = {
  */
 exports['Should correctly execute bulkWrite operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8275,7 +8276,7 @@ exports['Should correctly execute bulkWrite operation'] = {
  */
 exports['Should correctly execute findOneAndDelete operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8291,7 +8292,7 @@ exports['Should correctly execute findOneAndDelete operation'] = {
       col.insertMany([{a:1, b:1}], {w:1}, function(err, r) {
         test.equal(null, err);
         test.equal(1, r.result.n);
-        
+
         col.findOneAndDelete({a:1}
           , { projection: {b:1}, sort: {a:1} }
           , function(err, r) {
@@ -8317,7 +8318,7 @@ exports['Should correctly execute findOneAndDelete operation'] = {
  */
 exports['Should correctly execute findOneAndReplace operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8333,14 +8334,14 @@ exports['Should correctly execute findOneAndReplace operation'] = {
       col.insertMany([{a:1, b:1}], {w:1}, function(err, r) {
         test.equal(null, err);
         test.equal(1, r.result.n);
-        
+
         col.findOneAndReplace({a:1}
           , {c:1, b:1}
-          , { 
+          , {
                 projection: {b:1, c:1}
               , sort: {a:1}
               , returnOriginal: false
-              , upsert: true 
+              , upsert: true
             }
           , function(err, r) {
             test.equal(null, err);
@@ -8352,7 +8353,7 @@ exports['Should correctly execute findOneAndReplace operation'] = {
             test.done();
         });
       });
-    });      
+    });
     // END
   }
 }
@@ -8366,7 +8367,7 @@ exports['Should correctly execute findOneAndReplace operation'] = {
  */
 exports['Should correctly execute findOneAndUpdate operation'] = {
   metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
-  
+
   // The actual test we wish to run
   test: function(configuration, test) {
     var db = configuration.newDbInstance({w:1}, {poolSize:1, auto_reconnect:false});
@@ -8382,7 +8383,7 @@ exports['Should correctly execute findOneAndUpdate operation'] = {
       col.insertMany([{a:1, b:1}], {w:1}, function(err, r) {
         test.equal(null, err);
         test.equal(1, r.result.n);
-        
+
         col.findOneAndUpdate({a:1}
           , {$set: {d:1}}
           , {
@@ -8399,6 +8400,64 @@ exports['Should correctly execute findOneAndUpdate operation'] = {
 
             db.close();
             test.done();
+        });
+      });
+    });
+    // END
+  }
+}
+
+/**
+ * A simple example showing the listening to a capped collection
+ *
+ * @example-class Db
+ * @example-method createCollection
+ * @ignore
+ */
+exports['Should correctly add capped collection options to cursor'] = {
+  metadata: { requires: { topology: ['single', 'replicaset', 'sharded', 'ssl', 'heap', 'wiredtiger'] } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var db = configuration.newDbInstance(configuration.writeConcernMax(), {poolSize:1, auto_reconnect:false});
+
+    db.open(function(err, db) {
+    // LINE var MongoClient = require('mongodb').MongoClient,
+    // LINE   test = require('assert');
+    // LINE MongoClient.connect('mongodb://localhost:27017/test', function(err, db) {
+    // REPLACE configuration.writeConcernMax() WITH {w:1}
+    // REMOVE-LINE test.done();
+    // BEGIN
+      test.equal(null, err);
+
+      // Create a capped collection with a maximum of 1000 documents
+      db.createCollection("a_simple_collection_2", {capped:true, size:10000, max:1000, w:1}, function(err, collection) {
+        test.equal(null, err);
+
+        var docs = [];
+        for(var i = 0; i < 1000; i++) docs.push({a:i});
+
+        // Insert a document in the capped collection
+        collection.insertMany(docs, configuration.writeConcernMax(), function(err, result) {
+
+          // Start date
+          var s = new Date();
+
+          // Get the cursor
+          var cursor = collection.find({})
+            .addCursorFlag('tailable', true)
+            .addCursorFlag('awaitData', true)
+            .setCursorOption('numberOfRetries', 5)
+            .setCursorOption('tailableRetryInterval', 100);
+
+          cursor.on('data', function() {});
+
+          cursor.on('end', function() {
+            test.ok((new Date().getTime() - s.getTime()) > 1000);
+
+            db.close();
+            test.done();
+          });
         });
       });
     });

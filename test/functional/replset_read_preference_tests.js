@@ -87,7 +87,6 @@ exports['Should Correctly Pick lowest ping time'] = {
 
         // Attempt to perform a read
         db.collection('somecollection').findOne({}, {readPreference: new ReadPreference(ReadPreference.NEAREST)}, function(err, doc) {
-          console.dir(err)
           test.equal(null, err);          
 
           // Pick the server
@@ -813,6 +812,96 @@ exports['Ensure tag read goes only to the correct server'] = {
       });
 
       db.db('local').collection('system.replset').find().toArray(function(err, doc) {
+        db.close();
+        restartAndDone(configuration, test);
+      });
+    });
+
+    db.open(function(err, p_db) {
+      db = p_db;
+    });
+  }
+}
+
+/**
+ * @ignore
+ */
+exports['Ensure tag read goes only to the correct servers using nearest'] = {
+  metadata: { requires: { topology: 'replicaset' } },
+  
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var mongo = configuration.require
+      , MongoClient = mongo.MongoClient
+      , ReadPreference = mongo.ReadPreference
+      , ReplSet = mongo.ReplSet
+      , Server = mongo.Server
+      , Db = mongo.Db;
+
+    // Replica configuration
+    var replSet = new ReplSet( [
+        new Server(configuration.host, configuration.port),
+        new Server(configuration.host, configuration.port + 1),
+        new Server(configuration.host, configuration.port + 2)
+      ],
+      {rs_name:configuration.replicasetName, debug:true}
+    );
+
+    // Open the database
+    var db = new Db('local', replSet, {w:0, readPreference: new ReadPreference(ReadPreference.NEAREST, {"loc":"ny"})});
+    var success = false;
+    // Trigger test once whole set is up
+    db.on("fullsetup", function() {
+      db.serverConfig.replset.once('pickedServer', function(readPreference, server) {
+        test.equal('ny', server.lastIsMaster().tags.loc);
+        // Mark success
+        success = true;
+      });
+
+      db.db('local').collection('system.replset').find().toArray(function(err, doc) {
+        test.ok(success);
+        db.close();
+        restartAndDone(configuration, test);
+      });
+    });
+
+    db.open(function(err, p_db) {
+      db = p_db;
+    });
+  }
+}
+
+/**
+ * @ignore
+ */
+exports['Always uses primary readPreference for findAndModify'] = {
+  metadata: { requires: { topology: 'replicaset' } },
+
+  // The actual test we wish to run
+  test: function(configuration, test) {
+    var mongo = configuration.require
+      , MongoClient = mongo.MongoClient
+      , ReadPreference = mongo.ReadPreference
+      , ReplSet = mongo.ReplSet
+      , Server = mongo.Server
+      , Db = mongo.Db;
+
+    // Replica configuration
+    var replSet = new ReplSet( [
+        new Server(configuration.host, configuration.port),
+        new Server(configuration.host, configuration.port + 1),
+        new Server(configuration.host, configuration.port + 2)
+      ],
+      {rs_name:configuration.replicasetName, debug:true}
+    );
+
+    // Open the database
+    var db = new Db('test', replSet, {w:0, readPreference: new ReadPreference(ReadPreference.SECONDARY_PREFERRED)});
+    var success = false;
+    // Trigger test once whole set is up
+    db.on("fullsetup", function() {
+      db.collection('test').findAndModify({}, {}, { upsert: false }, function(err) {
+        test.equal(null, err);
         db.close();
         restartAndDone(configuration, test);
       });
